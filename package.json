@@ -6,13 +6,13 @@
   "homepage": "https://Ahmedbm99.github.io/CourroieFront",
 
   "scripts": {
-    "dev": "vite --port 5173",
-    "buildd": "vite build",
-    "preview": "vite preview --port 5174",
-      "predeploy": "npm run build",
-  "deploy": "gh-pages -d build",
-  "start": "react-scripts start",
-  "build": "react-scripts build"
+  "dev": "vite --port 5173",
+  "build": "vite build",
+  "preview": "vite preview --port 5174",
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d dist ",
+   "start": "react-scripts start"
+
   },
   "dependencies": {
     "react": "18.3.1",
