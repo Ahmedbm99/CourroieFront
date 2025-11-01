@@ -25,7 +25,7 @@ export default function HomePage() {
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#64748b' }}>
                 <i className="fas fa-headset" style={{ color: '#10b981' }}></i>
-                <span>Support expert</span>
+                <span>Support Expert </span>
               </div>
             </div>
             <div className="hero-buttons">
