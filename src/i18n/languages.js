@@ -10,6 +10,13 @@ export const translations = {
     contact: 'Contact',
     cart: 'Panier',
     
+    // whatsupp & help
+    whatsappHelp: "Contacter sur WhatsApp",
+    whatsappAssistance: "Assistance WhatsApp",
+    available: "Disponible :",
+    availabilityTime: "Lundi - Samedi, 9h à 18h",
+    chatOnWhatsApp: "Discuter sur WhatsApp",
+
     // HomePage
     heroTitle: 'KORTIBELT',
     heroSubtitle: 'DRIVEN BY POSSIBILITY',
@@ -197,6 +204,16 @@ export const translations = {
     contact: 'Contact',
     cart: 'Cart',
     
+    // whatsupp & help
+  whatsappHelp: "Contact via WhatsApp",
+  whatsappAssistance: "WhatsApp Assistance",
+  available: "Available:",
+  availabilityTime: "Monday - Saturday, 9 AM to 6 PM",
+  chatOnWhatsApp: "Chat on WhatsApp",
+
+
+
+
     // HomePage
     heroTitle: 'KORTIBELT',
     heroSubtitle: 'DRIVEN BY POSSIBILITY',

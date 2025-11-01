@@ -1,65 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { apiService } from '../services/apiService.js';
-import useCart from '../hooks/useCart.js';
 import { useLanguage } from '../contexts/LanguageContext';
-
+import ShowcaseComponent from '../components/Showcase.jsx';
 export default function HomePage() {
-  const [allProducts, setAllProducts] = useState([]);
-  const [filtered, setFiltered] = useState([]);
-  const [category, setCategory] = useState('all');
-  const [query, setQuery] = useState('');
-  const [showDimensionSearch, setShowDimensionSearch] = useState(false);
-  const [dimensions, setDimensions] = useState({
-    length_min: '',
-    length_max: '',
-    width_min: '',
-    width_max: '',
-    thickness_min: '',
-    thickness_max: ''
-  });
-  const [page, setPage] = useState(1);
-  const productsPerPage = 12;
-  const { add, setCartOpen } = useCart();
-  const navigate = useNavigate();
+  
   const { t } = useLanguage();
 
-  useEffect(() => {
-    (async () => {
-      await apiService.healthCheck();
-      const filters = {};
-      if (dimensions.length_min || dimensions.length_max) {
-        if (dimensions.length_min) filters.length_min = dimensions.length_min;
-        if (dimensions.length_max) filters.length_max = dimensions.length_max;
-      }
-      if (dimensions.width_min || dimensions.width_max) {
-        if (dimensions.width_min) filters.width_min = dimensions.width_min;
-        if (dimensions.width_max) filters.width_max = dimensions.width_max;
-      }
-      if (dimensions.thickness_min || dimensions.thickness_max) {
-        if (dimensions.thickness_min) filters.thickness_min = dimensions.thickness_min;
-        if (dimensions.thickness_max) filters.thickness_max = dimensions.thickness_max;
-      }
-      const products = await apiService.getProducts(filters);
-      setAllProducts(products);
-      setFiltered(products);
-    })();
-  }, [dimensions]);
-
-  useEffect(() => {
-    let list = [...allProducts];
-    if (category !== 'all') list = list.filter(p => p.category === category);
-    if (query.trim()) {
-      const q = query.toLowerCase();
-      list = list.filter(p => p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q) || p.profile.toLowerCase().includes(q));
-    }
-    setFiltered(list);
-    setPage(1);
-  }, [allProducts, category, query]);
-
-  const startIndex = (page - 1) * productsPerPage;
-  const endIndex = startIndex + productsPerPage;
-  const toShow = filtered.slice(0, endIndex);
 
   return (
     <>
@@ -84,7 +29,7 @@ export default function HomePage() {
               </div>
             </div>
             <div className="hero-buttons">
-              <a className="cta-button primary" href="#products">{t('discoverProducts')}</a>
+              <a className="cta-button primary" href="/family">{t('discoverProducts')}</a>
               <button className="cta-button secondary">{t('downloadCatalog')}</button>
             </div>
           </div>
@@ -94,16 +39,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="brand-intro">
-        <div className="container">
-          <div className="intro-content">
-            <h2>{t('brandIntro')}</h2>
-            <p>{t('brandDescription1')}</p>
-            <p>{t('brandDescription2')}</p>
-          </div>
-        </div>
-      </section>
+     
 
+      <ShowcaseComponent />
       {/* Trust badges */}
       <section style={{ background: '#f8f9fa', padding: '40px 0' }}>
         <div className="container">
@@ -133,42 +71,12 @@ export default function HomePage() {
       </section>
 
  
-   
-      <MaterialsSection />
       <ApplicationsSection />
       <AboutSection />
-      <ContactSection />
     </>
   );
 }
 
-function MaterialsSection(){
-  const { t } = useLanguage();
-  return (
-    <section id="materials" className="materials">
-      <div className="container">
-        <h2 className="section-title">{t('materialsTechnology')}</h2>
-        <div className="materials-content">
-          <div className="materials-table">
-            <table>
-              <thead><tr><th>{t('element')}</th><th>{t('matter')}</th><th>{t('function')}</th></tr></thead>
-              <tbody>
-                <tr><td><strong>{t('body')}</strong></td><td>CR Rubber / EPDM / PU</td><td>{t('heatResistance')}</td></tr>
-                <tr><td><strong>{t('cord')}</strong></td><td>Kevlar / Polyester / Fibre de verre</td><td>{t('traction')}</td></tr>
-                <tr><td><strong>{t('fabric')}</strong></td><td>Nylon / Coton / Linatex</td><td>{t('protection')}</td></tr>
-                <tr><td><strong>{t('coating')}</strong></td><td>PU / PVC / Linatex</td><td>{t('adaptedApplication')}</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div className="materials-image">
-            <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt={t('crossSection')} />
-            <p>{t('crossSection')}</p>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 function ApplicationsSection(){
   const { t } = useLanguage();
@@ -214,29 +122,4 @@ function AboutSection(){
   );
 }
 
-function ContactSection(){
-  const { t } = useLanguage();
-  return (
-    <section id="contact" className="contact">
-      <div className="container">
-        <h2 className="section-title">{t('contactDistribution')}</h2>
-        <div className="contact-content">
-          <div className="contact-info">
-            <div className="contact-item"><i className="fas fa-map-marker-alt"></i><div><h4>{t('address')}</h4><p>{t('industrialZone')}<br/>{t('tunisia')}</p></div></div>
-            <div className="contact-item"><i className="fas fa-phone"></i><div><h4>{t('phone')}</h4><p>+216 ...</p></div></div>
-            <div className="contact-item"><i className="fas fa-envelope"></i><div><h4>{t('email')}</h4><p>info@kortibelt.com</p></div></div>
-            <div className="contact-item"><i className="fas fa-globe"></i><div><h4>{t('website')}</h4><p>www.kortibelt.com</p></div></div>
-          </div>
-          <form className="contact-form" onSubmit={e => e.preventDefault()}>
-            <input type="text" placeholder={t('yourName')} required />
-            <input type="email" placeholder={t('yourEmail')} required />
-            <input type="text" placeholder={t('subject')} required />
-            <textarea placeholder={t('yourMessage')} rows="5" required></textarea>
-            <button type="submit">{t('sendMessage')}</button>
-          </form>
-        </div>
-      </div>
-    </section>
-  );
-}
 

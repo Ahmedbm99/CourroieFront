@@ -36,7 +36,6 @@ export default function Header() {
             <li className="dropdown">
               <a href="#products">{t('products')} <i className="fas fa-chevron-down"></i></a>
               <div className="dropdown-content">
-                <NavLink to="/family" onClick={() => setMobileOpen(false)}>{t('families')}</NavLink>
                 <a href="/family/trapezoidales" onClick={() => setMobileOpen(false)}>{t('trapezoidal')}</a>
                 <a href="/family/etroites" onClick={() => setMobileOpen(false)}>{t('narrowTrapezoidal')}</a>
                 <a href="/family/automobiles" onClick={() => setMobileOpen(false)}>{t('automotive')}</a>
@@ -46,8 +45,8 @@ export default function Header() {
               </div>
             </li>
             <li><NavLink to="/about" onClick={() => setMobileOpen(false)}>{t('about')}</NavLink></li>
-            <li><a href="#contact" onClick={() => setMobileOpen(false)}>{t('contact')}</a></li>
-          </ul>
+            <li><NavLink to="/contact" onClick={() => setMobileOpen(false)}>{t('contact')}</NavLink></li>
+          </ul> 
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
             <LanguageSelector />
             <div className={`hamburger ${mobileOpen ? 'active' : ''}`} onClick={() => setMobileOpen(v => !v)}>

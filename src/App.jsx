@@ -12,6 +12,7 @@ import CartButton from './components/CartButton.jsx';
 import QuoteModal from './components/QuoteModal.jsx';
 import WhatsAppButton from './components/WhatsAppButton.jsx';
 import HelpButton from './components/HelpButton.jsx';
+import ContactPage from './pages/ContactPage.jsx';
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/product/:id" element={<ProductDetailPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
       </Routes>
       <Footer />
       <CartButton />
