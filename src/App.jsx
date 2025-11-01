@@ -1,5 +1,5 @@
 import React from 'react';
-import {  HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import HomePage from './pages/HomePage.jsx';
@@ -18,6 +18,7 @@ export default function App() {
   return (
     <>
       <Header />
+      <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/family" element={<FamilyPage />} />
@@ -27,12 +28,14 @@ export default function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
       </Routes>
+      
       <Footer />
       <CartButton />
       <HelpButton />
       <CartModal />
       <QuoteModal />
       <WhatsAppButton />
+      </Router>
     </>
   );
 }
