@@ -32,20 +32,20 @@ export default function Header() {
           </div>
           <ul className={`nav-menu ${mobileOpen ? 'active' : ''}`}>
           <li><a href="https://www.aisgroup.tn"  target="_blank" rel="noopener noreferrer" onClick={() => setMobileOpen(false)}>{t('AIS GROUPE')}</a></li>
-            <li><NavLink to="/" onClick={() => setMobileOpen(false)}>{t('home')}</NavLink></li>
+            <li><NavLink to="/CourroieFront" onClick={() => setMobileOpen(false)}>{t('home')}</NavLink></li>
             <li className="dropdown">
               <p>{t('products')} <i className="fas fa-chevron-down"></i></p>
               <div className="dropdown-content">
-                <NavLink to="/family/trapezoidales" onClick={() => setMobileOpen(false)}>{t('trapezoidal')}</NavLink>
-                <NavLink to="/family/etroites" onClick={() => setMobileOpen(false)}>{t('narrowTrapezoidal')}</NavLink>
-                <NavLink to="/family/automobiles" onClick={() => setMobileOpen(false)}>{t('automotive')}</NavLink>
-                <NavLink to="/family/synchrones" onClick={() => setMobileOpen(false)}>{t('synchronous')}</NavLink>
-                <NavLink to="/family/variateur" onClick={() => setMobileOpen(false)}>{t('variator')}</NavLink>
-                <NavLink to="/family/speciales" onClick={() => setMobileOpen(false)}>{t('special')}</NavLink>
+                <NavLink to="/CourroieFront/family/trapezoidales" onClick={() => setMobileOpen(false)}>{t('trapezoidal')}</NavLink>
+                <NavLink to="/CourroieFront/family/etroites" onClick={() => setMobileOpen(false)}>{t('narrowTrapezoidal')}</NavLink>
+                <NavLink to="/CourroieFront/family/automobiles" onClick={() => setMobileOpen(false)}>{t('automotive')}</NavLink>
+                <NavLink to="/CourroieFront/family/synchrones" onClick={() => setMobileOpen(false)}>{t('synchronous')}</NavLink>
+                <NavLink to="/CourroieFront/family/variateur" onClick={() => setMobileOpen(false)}>{t('variator')}</NavLink>
+                <NavLink to="/CourroieFront/family/speciales" onClick={() => setMobileOpen(false)}>{t('special')}</NavLink>
               </div>
             </li>
-            <li><NavLink to="/about" onClick={() => setMobileOpen(false)}>{t('about')}</NavLink></li>
-            <li><NavLink to="/contact" onClick={() => setMobileOpen(false)}>{t('contact')}</NavLink></li>
+            <li><NavLink to="/CourroieFront/about" onClick={() => setMobileOpen(false)}>{t('about')}</NavLink></li>
+            <li><NavLink to="/CourroieFront/contact" onClick={() => setMobileOpen(false)}>{t('contact')}</NavLink></li>
           </ul> 
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
             <LanguageSelector />
