@@ -9,11 +9,13 @@ const root = createRoot(container);
 
 root.render(
   <React.StrictMode>
+     <LanguageProvider>
     <BrowserRouter>
-      <LanguageProvider>
+     
         <App />
-      </LanguageProvider>
+
     </BrowserRouter>
+      </LanguageProvider>
   </React.StrictMode>
 );
 
