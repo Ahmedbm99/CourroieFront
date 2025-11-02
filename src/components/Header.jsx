@@ -36,16 +36,16 @@ export default function Header() {
             <li className="dropdown">
               <p>{t('products')} <i className="fas fa-chevron-down"></i></p>
               <div className="dropdown-content">
-                <a href="/CourroieFront/family/trapezoidales" onClick={() => setMobileOpen(false)}>{t('trapezoidal')}</a>
-                <a href="/CourroieFront/family/etroites" onClick={() => setMobileOpen(false)}>{t('narrowTrapezoidal')}</a>
-                <a href="/CourroieFront/family/automobiles" onClick={() => setMobileOpen(false)}>{t('automotive')}</a>
-                <a href="/CourroieFront/family/synchrones" onClick={() => setMobileOpen(false)}>{t('synchronous')}</a>
-                <a href="/CourroieFront/family/variateur" onClick={() => setMobileOpen(false)}>{t('variator')}</a>
-                <a href="/CourroieFront/family/speciales" onClick={() => setMobileOpen(false)}>{t('special')}</a>
+                <NavLink to="/family/trapezoidales" onClick={() => setMobileOpen(false)}>{t('trapezoidal')}</NavLink>
+                <NavLink to="/family/etroites" onClick={() => setMobileOpen(false)}>{t('narrowTrapezoidal')}</NavLink>
+                <NavLink to="/family/automobiles" onClick={() => setMobileOpen(false)}>{t('automotive')}</NavLink>
+                <NavLink to="/family/synchrones" onClick={() => setMobileOpen(false)}>{t('synchronous')}</NavLink>
+                <NavLink to="/family/variateur" onClick={() => setMobileOpen(false)}>{t('variator')}</NavLink>
+                <NavLink to="/family/speciales" onClick={() => setMobileOpen(false)}>{t('special')}</NavLink>
               </div>
             </li>
-            <li><NavLink to="/CourroieFront/about" onClick={() => setMobileOpen(false)}>{t('about')}</NavLink></li>
-            <li><NavLink to="/CourroieFront/contact" onClick={() => setMobileOpen(false)}>{t('contact')}</NavLink></li>
+            <li><NavLink to="/about" onClick={() => setMobileOpen(false)}>{t('about')}</NavLink></li>
+            <li><NavLink to="/contact" onClick={() => setMobileOpen(false)}>{t('contact')}</NavLink></li>
           </ul> 
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
             <LanguageSelector />
