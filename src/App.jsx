@@ -18,7 +18,7 @@ export default function App() {
   return (
     <>
       <Header />
-      <Router>
+     
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/family" element={<FamilyPage />} />
@@ -35,7 +35,6 @@ export default function App() {
       <CartModal />
       <QuoteModal />
       <WhatsAppButton />
-      </Router>
     </>
   );
 }
