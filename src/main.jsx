@@ -1,6 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from "react-router-dom";
 import { LanguageProvider } from './contexts/LanguageContext';
 import App from './App.jsx';
 
@@ -10,11 +10,11 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
      <LanguageProvider>
-    <BrowserRouter>
+    <HashRouter>
      
         <App />
 
-    </BrowserRouter>
+    </HashRouter>
       </LanguageProvider>
   </React.StrictMode>
 );
