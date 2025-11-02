@@ -10,7 +10,7 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
      <LanguageProvider>
-    <HashRouter  basename="/CourroieFront">
+    <HashRouter>
      
         <App />
 
