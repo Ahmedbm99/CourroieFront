@@ -36,12 +36,12 @@ export default function Header() {
             <li className="dropdown">
               <p>{t('products')} <i className="fas fa-chevron-down"></i></p>
               <div className="dropdown-content">
-                <NavLink to="/CourroieFront/family/trapezoidales" onClick={() => setMobileOpen(false)}>{t('trapezoidal')}</NavLink>
-                <NavLink to="/CourroieFront/family/etroites" onClick={() => setMobileOpen(false)}>{t('narrowTrapezoidal')}</NavLink>
-                <NavLink to="/CourroieFront/family/automobiles" onClick={() => setMobileOpen(false)}>{t('automotive')}</NavLink>
-                <NavLink to="/CourroieFront/family/synchrones" onClick={() => setMobileOpen(false)}>{t('synchronous')}</NavLink>
-                <NavLink to="/CourroieFront/family/variateur" onClick={() => setMobileOpen(false)}>{t('variator')}</NavLink>
-                <NavLink to="/CourroieFront/family/speciales" onClick={() => setMobileOpen(false)}>{t('special')}</NavLink>
+                <NavLink to="/family/trapezoidales" onClick={() => setMobileOpen(false)}>{t('trapezoidal')}</NavLink>
+                <NavLink to="/family/etroites" onClick={() => setMobileOpen(false)}>{t('narrowTrapezoidal')}</NavLink>
+                <NavLink to="/family/automobiles" onClick={() => setMobileOpen(false)}>{t('automotive')}</NavLink>
+                <NavLink to="/family/synchrones" onClick={() => setMobileOpen(false)}>{t('synchronous')}</NavLink>
+                <NavLink to="/family/variateur" onClick={() => setMobileOpen(false)}>{t('variator')}</NavLink>
+                <NavLink to="/family/speciales" onClick={() => setMobileOpen(false)}>{t('special')}</NavLink>
               </div>
             </li>
             <li><NavLink to="/CourroieFront/about" onClick={() => setMobileOpen(false)}>{t('about')}</NavLink></li>
