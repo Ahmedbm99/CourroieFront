@@ -24,9 +24,9 @@ export default function App() {
         <Route path="/family" element={<FamilyPage />} />
         <Route path="/family/:familyKey" element={<FamilyPage />} />
         <Route path="/product/:id" element={<ProductDetailPage />} />
-        <Route path="/CourroieFront/cart" element={<CartPage />} />
-        <Route path="/CourroieFront/about" element={<AboutPage />} />
-        <Route path="/CourroieFront/contact" element={<ContactPage />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
       </Routes>
       
       <Footer />

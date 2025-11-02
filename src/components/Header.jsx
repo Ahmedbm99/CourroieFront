@@ -32,7 +32,7 @@ export default function Header() {
           </div>
           <ul className={`nav-menu ${mobileOpen ? 'active' : ''}`}>
           <li><a href="https://www.aisgroup.tn"  target="_blank" rel="noopener noreferrer" onClick={() => setMobileOpen(false)}>{t('AIS GROUPE')}</a></li>
-            <li><NavLink to="/CourroieFront/" onClick={() => setMobileOpen(false)}>{t('home')}</NavLink></li>
+            <li><NavLink to="/" onClick={() => setMobileOpen(false)}>{t('home')}</NavLink></li>
             <li className="dropdown">
               <p>{t('products')} <i className="fas fa-chevron-down"></i></p>
               <div className="dropdown-content">
@@ -44,8 +44,8 @@ export default function Header() {
                 <NavLink to="/family/speciales" onClick={() => setMobileOpen(false)}>{t('special')}</NavLink>
               </div>
             </li>
-            <li><NavLink to="/CourroieFront/about" onClick={() => setMobileOpen(false)}>{t('about')}</NavLink></li>
-            <li><NavLink to="/CourroieFront/contact" onClick={() => setMobileOpen(false)}>{t('contact')}</NavLink></li>
+            <li><NavLink to="/about" onClick={() => setMobileOpen(false)}>{t('about')}</NavLink></li>
+            <li><NavLink to="/contact" onClick={() => setMobileOpen(false)}>{t('contact')}</NavLink></li>
           </ul> 
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
             <LanguageSelector />
