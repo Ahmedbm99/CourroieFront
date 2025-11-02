@@ -34,18 +34,18 @@ export default function Header() {
           <li><a href="https://www.aisgroup.tn"  target="_blank" rel="noopener noreferrer" onClick={() => setMobileOpen(false)}>{t('AIS GROUPE')}</a></li>
             <li><a href="/" onClick={() => setMobileOpen(false)}>{t('home')}</a></li>
             <li className="dropdown">
-              <a href="#products">{t('products')} <i className="fas fa-chevron-down"></i></a>
+              <p>{t('products')} <i className="fas fa-chevron-down"></i></p>
               <div className="dropdown-content">
-                <a href="/family/trapezoidales" onClick={() => setMobileOpen(false)}>{t('trapezoidal')}</a>
-                <a href="/family/etroites" onClick={() => setMobileOpen(false)}>{t('narrowTrapezoidal')}</a>
-                <a href="/family/automobiles" onClick={() => setMobileOpen(false)}>{t('automotive')}</a>
-                <a href="/family/synchrones" onClick={() => setMobileOpen(false)}>{t('synchronous')}</a>
-                <a href="/family/variateur" onClick={() => setMobileOpen(false)}>{t('variator')}</a>
-                <a href="/family/speciales" onClick={() => setMobileOpen(false)}>{t('special')}</a>
+                <a href="/CourroieFront/family/trapezoidales" onClick={() => setMobileOpen(false)}>{t('trapezoidal')}</a>
+                <a href="/CourroieFront/family/etroites" onClick={() => setMobileOpen(false)}>{t('narrowTrapezoidal')}</a>
+                <a href="/CourroieFront/family/automobiles" onClick={() => setMobileOpen(false)}>{t('automotive')}</a>
+                <a href="/CourroieFront/family/synchrones" onClick={() => setMobileOpen(false)}>{t('synchronous')}</a>
+                <a href="/CourroieFront/family/variateur" onClick={() => setMobileOpen(false)}>{t('variator')}</a>
+                <a href="/CourroieFront/family/speciales" onClick={() => setMobileOpen(false)}>{t('special')}</a>
               </div>
             </li>
-            <li><NavLink to="/about" onClick={() => setMobileOpen(false)}>{t('about')}</NavLink></li>
-            <li><NavLink to="/contact" onClick={() => setMobileOpen(false)}>{t('contact')}</NavLink></li>
+            <li><NavLink to="/CourroieFront/about" onClick={() => setMobileOpen(false)}>{t('about')}</NavLink></li>
+            <li><NavLink to="/CourroieFront/contact" onClick={() => setMobileOpen(false)}>{t('contact')}</NavLink></li>
           </ul> 
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
             <LanguageSelector />

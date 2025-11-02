@@ -5,9 +5,10 @@ import useCart from '../hooks/useCart.js';
 import { families } from '../data/families.js';
 import { useLanguage } from '../contexts/LanguageContext';
 import { getTranslation } from '../i18n/languages.js';
-
+import { mockProducts } from './FamilyPage.jsx';
 export default function ProductDetailPage() {
   const { id } = useParams();
+  console.log(mockProducts);
   const navigate = useNavigate();
   const { add, setCartOpen } = useCart();
   const { t, language } = useLanguage();
@@ -25,9 +26,9 @@ export default function ProductDetailPage() {
   useEffect(() => {
     (async () => {
       try {
-        await apiService.healthCheck();
-        const data = await apiService.getProduct(id);
-        setProduct(data);
+       // const data = await apiService.getProduct(id);
+        console.log("Fetching product with id:", id);
+       setProduct(mockProducts.find(p => p.id === parseInt(id)));
       } catch (err) {
         setError(t('productNotFound'));
         console.error(err);
@@ -399,7 +400,7 @@ export default function ProductDetailPage() {
               marginBottom: '30px',
               fontWeight: 'bold'
             }}>
-              <i className="fas fa-box"></i> {product.stock > 0 ? `${t('inStock')} (${product.stock} ${t('units')})` : t('outOfStock')}
+              <i className="fas fa-box"></i> {product.stock > 0 ? `${t('inStock')}  ` : t('outOfStock')}
             </div>
 
             <div style={{ background: 'white', borderRadius: '12px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.1)', marginBottom: '30px' }}>

@@ -6,6 +6,75 @@ import { families as familiesMeta } from '../data/families.js';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const families = Object.fromEntries(Object.entries(familiesMeta).map(([k,v]) => [k, { name: v.title, profiles: v.profiles }]));
+// mockProducts.js
+export const mockProducts = [
+  {
+    id: 1,
+    name: 'Courroie Trapézoïdale A100',
+    description: 'Courroie trapézoïdale robuste pour moteurs industriels.',
+    category: 'trapezoidales',
+    profile: 'A',
+    material: 'EPDM',
+    stock: 15,
+    image_url: 'https://www.atecfrance.fr/content/images/product_main/courroie-trapezoidale-linea-00.jpg',
+    specifications: 'Longueur: 1000mm, Largeur: 20mm, Epaisseur: 8mm',
+  },
+  {
+    id: 2,
+    name: 'Courroie Synchrone S8M-200',
+    description: 'Courroie synchrone pour transmission de puissance précise.',
+    category: 'synchrones',
+    profile: 'S8M',
+    material: 'PU',
+    stock: 5,
+    image_url: 'https://deremaux.com/wp-content/uploads/courroie-synchrone-20190322.jpg',
+    specifications: 'Pas: 8mm, Largeur: 20mm, Dents: 25',
+  },
+  {
+    id: 3,
+    name: 'Courroie Automobile Renault',
+    description: 'Courroie spéciale pour moteurs automobiles Renault.',
+    category: 'automobiles',
+    profile: 'Automobile',
+    material: 'CR Rubber',
+    stock: 0,
+    image_url: 'https://cdn-s-www.leprogres.fr/images/e4aeb08c-147f-42b9-9f43-85ca2addf3be/NW_raw/une-courroie-crantee-et-ses-deux-galets-tendeurs-changez-toutes-les-pieces-necessaires-il-en-va-de-la-bonne-sante-de-votre-automobile-photo-dr-1604394025.jpg',
+    specifications: 'Longueur: 1200mm, Largeur: 25mm',
+  },
+  {
+    id: 4,
+    name: 'Courroie Variateur V50',
+    description: 'Courroie pour variateurs industriels haute performance.',
+    category: 'variateur',
+    profile: 'V',
+    material: 'Polyester',
+    stock: 20,
+    image_url: 'https://via.placeholder.com/400x200.png?text=Courroie+Variateur+V50',
+    specifications: 'Longueur: 500mm, Largeur: 15mm',
+  },
+  {
+    id: 5,
+    name: 'Courroie Spéciale Machine CNC',
+    description: 'Solution sur mesure pour machines spéciales.',
+    category: 'speciales',
+    profile: 'CNC',
+    material: 'Kevlar',
+    stock: 8,
+    image_url: 'https://via.placeholder.com/400x200.png?text=Courroie+CNC',
+    specifications: 'Longueur: 800mm, Largeur: 20mm',
+  },
+  {
+    id: 6,
+    name: 'Courroie Étroit E30',
+    description: 'Courroie étroite pour applications industrielles compactes.',
+    category: 'etroites',
+    profile: 'E30',
+    material: 'Fibre de verre',
+    stock: 12,
+    image_url: 'https://via.placeholder.com/400x200.png?text=Courroie+E30',
+    specifications: 'Longueur: 300mm, Largeur: 10mm',
+  },
+];
 
 export default function FamilyPage() {
   const [allProducts, setAllProducts] = useState([]);
@@ -34,7 +103,6 @@ export default function FamilyPage() {
 
   useEffect(() => {
     (async () => {
-      await apiService.healthCheck();
       const filters = {};
       if (dimensions.length_min || dimensions.length_max) {
         if (dimensions.length_min) filters.length_min = dimensions.length_min;
@@ -50,13 +118,13 @@ export default function FamilyPage() {
       }
       if (family && family !== 'all') {
         filters.category = family;
-        const byCat = await apiService.getProducts(filters);
-        setAllProducts(byCat);
-        setFiltered(byCat);
+    //    const byCat = await apiService.getProducts(filters);
+     //   setAllProducts(byCat);
+     //   setFiltered(byCat);
       } else {
-        const products = await apiService.getProducts(filters);
-        setAllProducts(products);
-        setFiltered(products);
+    //    const products = await apiService.getProducts(filters);
+        setAllProducts(mockProducts);
+        setFiltered(mockProducts);
       }
     })();
   }, [family, dimensions]);
@@ -114,7 +182,7 @@ export default function FamilyPage() {
 
       <section className="family-navigation">
         <div className="container">
-          <div className="family-tabs">
+          <div className="family-tabs font-size-8">
             {['all','trapezoidales','etroites','automobiles','synchrones','variateur','speciales'].map(key => (
               <button key={key} className={`family-tab ${family === key ? 'active' : ''}`} data-family={key} onClick={() => setFamily(key)}>
                 <i className={`fas ${key==='automobiles'?'fa-car':'fa-cog'}`}></i>
@@ -248,7 +316,6 @@ export default function FamilyPage() {
           <div className="products-header">
             <div className="products-info">
               <h2 id="familyTitle">{family==='all'? t('allFamilies'): (families[family]?.name || t('families'))}</h2>
-              <p id="productsCount">{t('showingProducts')} {Math.min(page*productsPerPage, filtered.length)} {t('on')} {filtered.length} {t('productsCount')}</p>
             </div>
             <div className="view-controls">
               <button className={`view-btn ${view==='grid'?'active':''}`} data-view="grid" onClick={() => setView('grid')}><i className="fas fa-th"></i></button>
