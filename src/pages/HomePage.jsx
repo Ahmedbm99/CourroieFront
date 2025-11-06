@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { FourSquare } from 'react-loading-indicators'; 
 import { useLanguage } from '../contexts/LanguageContext';
 import ShowcaseComponent from '../components/Showcase.jsx';
 import HeroSlideshow from '../components/HeroSlideshow';
@@ -6,7 +7,19 @@ import { useSelector } from 'react-redux';
 export default function HomePage() {
   
   const { t } = useLanguage(); 
-
+   const isLoadingFamily = useSelector((state) => state.family.isLoading);
+    const isLoadingType = useSelector((state) => state.type.isLoading);
+  
+    console.log('Family Loading State:', isLoadingFamily);
+    console.log('Type Loading State:', isLoadingType);
+    // Show loading only if either is loading
+    if (isLoadingFamily && isLoadingType) {
+      return (
+        <div className="loading-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+          <FourSquare color="#546d54" size="large" />
+        </div>
+      );
+    }
   return (
     <>
 
@@ -73,16 +86,15 @@ function FamillySection(){
     const { t, language } = useLanguage(); 
 
   const family = useSelector(state => state.family.list );
-  console.log("Families from Redux:", family);
   return (
- <section id="applications" className="applications">
+ <section id="familycard" className="familycard">
       <div className="container">
         <h2 className="section-title">{t('family')}</h2>
 
-        <div className="applications-grid">
+        <div className="familycard-grid">
           {family && family.length > 0 ? (
             family.map((fam) => (
-              <div key={fam.id} className="application-card">
+              <div key={fam.id} className="familycard-card">
                 <i className="fas fa-cog"></i>
                 <h3>
                   {language === 'fr' ? fam.nomFrancais : fam.nomAnglais}

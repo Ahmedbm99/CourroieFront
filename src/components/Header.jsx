@@ -1,33 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { FourSquare } from 'react-loading-indicators'; 
+
+import { useDispatch,useSelector } from 'react-redux';
 import { useLanguage } from '../contexts/LanguageContext';
 import LanguageSelector from './LanguageSelector';
 import FamilyServices from '../services/FamilyServices';
 import TypesServices from '../services/TypesServices';
-import { setFamily } from '../store/familySlice';
-import { setTypes } from '../store/typeSlice';
+import { setFamily,setLoadingFamily } from '../store/familySlice';
+import { setTypes,setLoadingType } from '../store/typeSlice';
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const dispatch = useDispatch();
-  const { t, language } = useLanguage();
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [families, setFamilies] = useState([]);
   const [types, setTypesState] = useState([]);
+  const dispatch = useDispatch();
+  const { t, language } = useLanguage();
 
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     const fetchFamiliesWithTypes = async () => {
-      // Only fetch if Redux store is empty
       if (families.length > 0 && types.length > 0) return;
 
       try {
+        dispatch(setLoadingFamily(true));
+        dispatch(setLoadingType(true));
         const familyResponse = await FamilyServices.getAllFamilies();
         const typeResponse = await TypesServices.getAllTypes();
         setFamilies(familyResponse.data);
         setTypesState(typeResponse.data);
         dispatch(setFamily(familyResponse.data));
         dispatch(setTypes(typeResponse.data));
+        dispatch(setLoadingFamily(false));
+        dispatch(setLoadingType(false));
       } catch (error) {
         console.error('Error fetching families or types:', error);
       }
@@ -35,7 +46,6 @@ export default function Header() {
 
     fetchFamiliesWithTypes();
 
-    // Scroll effect
     const onScroll = () => {
       const header = document.querySelector('.header');
       if (!header) return;
@@ -51,7 +61,19 @@ export default function Header() {
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, [dispatch, families.length, types.length]);
-
+   const isLoadingFamily = useSelector((state) => state.family.isLoading);
+    const isLoadingType = useSelector((state) => state.type.isLoading);
+    
+    console.log('Family Loading State:', isLoadingFamily);
+    console.log('Type Loading State:', isLoadingType);
+    // Show loading only if either is loading
+    if (isLoadingFamily && isLoadingType) {
+      return (
+        <div className="loading-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+          <FourSquare color="#546d54" size="large" />
+        </div>
+      );
+    }
   return (
     <header className="header">
       <nav className="navbar">
@@ -77,33 +99,56 @@ export default function Header() {
               </NavLink>
             </li>
 
-            {/* Show each family with its types */}
             {families && families.length > 0 ? (
               families.map((fam) => (
-                <li key={fam.id} className="dropdown">
+                <li key={fam.id} className={isMobile ? '' : 'dropdown'}>
                   <span>
                     {language === 'fr' ? fam.nomFrancais : fam.nomAnglais}{' '}
-                    <i className="fas fa-chevron-down"></i>
+                    {!isMobile && <i className="fas fa-chevron-down"></i>}
                   </span>
-                  <div className="dropdown-content">
-                    {types
-                      .filter((type) => type.famille_id === fam.id)
-                      .map((type) => (
-                        <NavLink
-                          key={type.id}
-                          to={`/type/${type.id}`}
-                          onClick={() => setMobileOpen(false)}
-                        >
-                          {language === 'fr'
-                            ? type.nomFrancais
-                            : type.nomAnglais}
-                        </NavLink>
-                      ))}
-                  </div>
+
+                  {/* Desktop dropdown */}
+                  {!isMobile && (
+                    <div className="dropdown-content">
+                      {types
+                        .filter((type) => type.famille_id === fam.id)
+                        .map((type) => (
+                          <NavLink
+                            key={type.id}
+                            to={`/type/${type.id}`}
+                            onClick={() => setMobileOpen(false)}
+                          >
+                            {language === 'fr'
+                              ? type.nomFrancais
+                              : type.nomAnglais}
+                          </NavLink>
+                        ))}
+                    </div>
+                  )}
+
+                  {/* Mobile integrated list */}
+                  {isMobile && (
+                    <ul className="mobile-submenu">
+                      {types
+                        .filter((type) => type.famille_id === fam.id)
+                        .map((type) => (
+                          <li key={type.id}>
+                            <NavLink
+                              to={`/type/${type.id}`}
+                              onClick={() => setMobileOpen(false)}
+                            >
+                              {language === 'fr'
+                                ? type.nomFrancais
+                                : type.nomAnglais}
+                            </NavLink>
+                          </li>
+                        ))}
+                    </ul>
+                  )}
                 </li>
               ))
             ) : (
-              <li>{t('loading')}...</li>
+              <></>
             )}
 
             <li>
@@ -118,13 +163,7 @@ export default function Header() {
             </li>
           </ul>
 
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '25px',
-            }}
-          >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '25px' }}>
             <LanguageSelector />
             <div
               className={`hamburger ${mobileOpen ? 'active' : ''}`}

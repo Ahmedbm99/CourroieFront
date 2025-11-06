@@ -20,13 +20,15 @@ const family = createSlice({
   reducers: {
     setFamily: (state, action) => {
      state.list = action.payload;
-       
     },
     clearFamily: (state) => {
       state.list = [];
+    },
+    setLoadingFamily: (state, action) => {
+      state.isLoading = action.payload;
     }
   }
 });
 
-export const { setFamily ,clearFamily} = family.actions;
+export const { setFamily ,clearFamily,setLoadingFamily} = family.actions;
 export default family.reducer;

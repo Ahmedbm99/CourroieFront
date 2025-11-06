@@ -15,7 +15,7 @@ const initialState = {
     materiauxFrancais:null,
     materiauxAnglais:null
 } ],
-
+isLoading: false,
 };
 
 const type = createSlice({
@@ -28,9 +28,12 @@ const type = createSlice({
     },
     clearTypes: (state) => {
       state.list = [];
+    },
+        setLoadingType: (state, action) => {
+      state.isLoading = action.payload;
     }
   }
 });
 
-export const { setTypes ,clearTypes} = type.actions;
+export const { setTypes ,clearTypes,setLoadingType} = type.actions;
 export default type.reducer;
