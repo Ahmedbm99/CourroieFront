@@ -1,6 +1,5 @@
-import React, { use, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import Api from '../services/Api';
 import useCart from '../hooks/useCart.js';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useSelector } from 'react-redux';
@@ -8,70 +7,88 @@ import { useSelector } from 'react-redux';
 export const mockProducts = [
   {
     id: 1,
-    name: 'Courroie Trapézoïdale A100',
+    nom: 'Courroie Trapézoïdale A100',
     description: 'Courroie trapézoïdale robuste pour moteurs industriels.',
-    category: 'trapezoidales',
-    profile: 'A',
-    material: 'EPDM',
+    famille_courroie_id: 'trapezoidales',
+    profil: 'A',
+    matiere: 'EPDM',
     stock: 15,
     image_url: 'https://www.atecfrance.fr/content/images/product_main/courroie-trapezoidale-linea-00.jpg',
     specifications: 'Longueur: 1000mm, Largeur: 20mm, Epaisseur: 8mm',
+    longueur_int_mm: 1000,
+    largeur_mm: 20,
+    epaisseur_mm: 8
   },
   {
     id: 2,
-    name: 'Courroie Synchrone S8M-200',
+    nom: 'Courroie Synchrone S8M-200',
     description: 'Courroie synchrone pour transmission de puissance précise.',
-    category: 'synchrones',
-    profile: 'S8M',
-    material: 'PU',
+    famille_courroie_id: 'synchrones',
+    profil: 'S8M',
+    matiere: 'PU',
     stock: 5,
     image_url: 'https://deremaux.com/wp-content/uploads/courroie-synchrone-20190322.jpg',
     specifications: 'Pas: 8mm, Largeur: 20mm, Dents: 25',
+    longueur_int_mm: 200,
+    largeur_mm: 20,
+    epaisseur_mm: 5
   },
   {
     id: 3,
-    name: 'Courroie Automobile Renault',
+    nom: 'Courroie Automobile Renault',
     description: 'Courroie spéciale pour moteurs automobiles Renault.',
-    category: 'automobiles',
-    profile: 'Automobile',
-    material: 'CR Rubber',
+    famille_courroie_id: 'automobiles',
+    profil: 'Automobile',
+    matiere: 'CR Rubber',
     stock: 0,
     image_url: 'https://cdn-s-www.leprogres.fr/images/e4aeb08c-147f-42b9-9f43-85ca2addf3be/NW_raw/une-courroie-crantee-et-ses-deux-galets-tendeurs-changez-toutes-les-pieces-necessaires-il-en-va-de-la-bonne-sante-de-votre-automobile-photo-dr-1604394025.jpg',
     specifications: 'Longueur: 1200mm, Largeur: 25mm',
+    longueur_int_mm: 1200,
+    largeur_mm: 25,
+    epaisseur_mm: 8
   },
   {
     id: 4,
-    name: 'Courroie Variateur V50',
+    nom: 'Courroie Variateur V50',
     description: 'Courroie pour variateurs industriels haute performance.',
-    category: 'variateur',
-    profile: 'V',
-    material: 'Polyester',
+    famille_courroie_id: 'variateur',
+    profil: 'V',
+    matiere: 'Polyester',
     stock: 20,
     image_url: 'https://via.placeholder.com/400x200.png?text=Courroie+Variateur+V50',
     specifications: 'Longueur: 500mm, Largeur: 15mm',
+    longueur_int_mm: 500,
+    largeur_mm: 15,
+    epaisseur_mm: 5
   },
   {
     id: 5,
-    name: 'Courroie Spéciale Machine CNC',
+    nom: 'Courroie Spéciale Machine CNC',
     description: 'Solution sur mesure pour machines spéciales.',
-    category: 'speciales',
-    profile: 'CNC',
-    material: 'Kevlar',
+    famille_courroie_id: 'speciales',
+    profil: 'CNC',
+    matiere: 'Kevlar',
     stock: 8,
     image_url: 'https://via.placeholder.com/400x200.png?text=Courroie+CNC',
     specifications: 'Longueur: 800mm, Largeur: 20mm',
+    longueur_int_mm: 800,
+    largeur_mm: 20,
+    epaisseur_mm: 6
   },
   {
     id: 6,
-    name: 'Courroie Étroit E30',
+    nom: 'Courroie Étroit E30',
     description: 'Courroie étroite pour applications industrielles compactes.',
-    category: 'etroites',
-    profile: 'E30',
-    material: 'Fibre de verre',
+    famille_courroie_id: 'etroites',
+    profil: 'E30',
+    matiere: 'Fibre de verre',
     stock: 12,
     image_url: 'https://via.placeholder.com/400x200.png?text=Courroie+E30',
     specifications: 'Longueur: 300mm, Largeur: 10mm',
-  },
+    longueur_int_mm: 300,
+    largeur_mm: 10,
+    epaisseur_mm: 4
+  }
 ];
 
 export default function FamilyPage() {
@@ -79,89 +96,88 @@ export default function FamilyPage() {
   const [filtered, setFiltered] = useState([]);
   const params = useParams();
   const navigate = useNavigate();
-  const family = useSelector(state => state.family.list.length > 0 && params.familyKey ? state.family.list.find(f => f.id.toString() === params.familyKey)?.nomFrancais.toLowerCase() : 'all');
-
+  const familyKey = params.familyKey || 'all';
+  const typeId = params.typeId || null;
   const [profile, setProfile] = useState('');
   const [material, setMaterial] = useState('');
   const [stock, setStock] = useState('');
   const [search, setSearch] = useState('');
-  const [showDimensionSearch, setShowDimensionSearch] = useState(false);
   const [dimensions, setDimensions] = useState({
     length_min: '',
-    length_max: '',
     width_min: '',
-    width_max: '',
-    thickness_min: '',
-    thickness_max: ''
+    thickness_min: ''
   });
   const [view, setView] = useState('grid');
   const [page, setPage] = useState(1);
   const productsPerPage = 12;
   const { add } = useCart();
-  const { t} = useLanguage();
+  const { t } = useLanguage();
 
   useEffect(() => {
-    (async () => {
-      const filters = {};
-      if (dimensions.length_min || dimensions.length_max) {
-        if (dimensions.length_min) filters.length_min = dimensions.length_min;
-        if (dimensions.length_max) filters.length_max = dimensions.length_max;
-      }
-      if (dimensions.width_min || dimensions.width_max) {
-        if (dimensions.width_min) filters.width_min = dimensions.width_min;
-        if (dimensions.width_max) filters.width_max = dimensions.width_max;
-      }
-      if (dimensions.thickness_min || dimensions.thickness_max) {
-        if (dimensions.thickness_min) filters.thickness_min = dimensions.thickness_min;
-        if (dimensions.thickness_max) filters.thickness_max = dimensions.thickness_max;
-      }
-      if (family && family !== 'all') {
-        filters.category = family;
-    //    const byCat = await apiService.getProducts(filters);
-     //   setAllProducts(byCat);
-     //   setFiltered(byCat);
-      } else {
-    //    const products = await apiService.getProducts(filters);
-        setAllProducts(mockProducts);
-        setFiltered(mockProducts);
-      }
-    })();
-  }, [family, dimensions]);
+    setAllProducts(mockProducts);
+    setFiltered(mockProducts);
+  }, []);
 
-  useEffect(() => {
-    // keep URL in sync with selection
-    if (family && family !== 'all') navigate(`/family/${family}`, { replace: true });
-    else navigate('/family', { replace: true });
-  }, [family, navigate]);
+  const lengthOptions = useMemo(() => {
+    const set = new Set();
+    allProducts.forEach(p => p.longueur_int_mm && set.add(p.longueur_int_mm));
+    return Array.from(set).sort((a, b) => a - b);
+  }, [allProducts]);
+
+  const widthOptions = useMemo(() => {
+    const set = new Set();
+    allProducts.forEach(p => p.largeur_mm && set.add(p.largeur_mm));
+    return Array.from(set).sort((a, b) => a - b);
+  }, [allProducts]);
+
+  const thicknessOptions = useMemo(() => {
+    const set = new Set();
+    allProducts.forEach(p => p.epaisseur_mm && set.add(p.epaisseur_mm));
+    return Array.from(set).sort((a, b) => a - b);
+  }, [allProducts]);
 
   useEffect(() => {
     let list = [...allProducts];
-    if (family !== 'all') list = list.filter(p => p.category === family);
+
+    if (familyKey !== 'all') list = list.filter(p => p.famille_courroie_id === familyKey);
+    if (typeId) list = list.filter(p => p.type_courroie_id === typeId);
+
     if (search.trim()) {
       const q = search.toLowerCase();
-      list = list.filter(p => p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q) || p.profile.toLowerCase().includes(q));
+      list = list.filter(p =>
+        p.nom.toLowerCase().includes(q) ||
+        (p.description || '').toLowerCase().includes(q) ||
+        (p.profil || '').toLowerCase().includes(q)
+      );
     }
-    if (profile) list = list.filter(p => p.profile.includes(profile));
-    if (material) list = list.filter(p => (p.material || '').includes(material));
-    if (stock === 'in-stock') list = list.filter(p => p.stock > 10);
-    else if (stock === 'low-stock') list = list.filter(p => p.stock > 0 && p.stock <= 10);
-    else if (stock === 'out-of-stock') list = list.filter(p => p.stock === 0);
+
+    if (profile) list = list.filter(p => (p.profil || '').includes(profile));
+    if (material) list = list.filter(p => (p.matiere || '').includes(material));
+
+    const { length_min, width_min, thickness_min } = dimensions;
+    list = list.filter(p =>
+      (!length_min || p.longueur_int_mm.toString() === length_min) &&
+      (!width_min || p.largeur_mm.toString() === width_min) &&
+      (!thickness_min || p.epaisseur_mm.toString() === thickness_min)
+    );
+
     setFiltered(list);
     setPage(1);
-  }, [allProducts, family, profile, material, stock, search]);
+  }, [allProducts, familyKey, typeId, profile, material, stock, search, dimensions]);
+const profileOptions = useMemo(() => {
+  const set = new Set();
+  allProducts.forEach(p => p.profil && set.add(p.profil));
+  return Array.from(set);
+}, [allProducts]);
 
+const materialOptions = useMemo(() => {
+  const set = new Set();
+  allProducts.forEach(p => p.matiere && set.add(p.matiere));
+  return Array.from(set);
+}, [allProducts]);
   const startIndex = (page - 1) * productsPerPage;
   const endIndex = startIndex + productsPerPage;
   const toShow = filtered.slice(0, endIndex);
-
-  const profileOptions = useMemo(() => {
-    if (family === 'all') {
-      const set = new Set();
-      Object.values(families).forEach(f => f.profiles.forEach(p => set.add(p)));
-      return Array.from(set).sort();
-    }
-    return families[family]?.profiles || [];
-  }, [family]);
 
   return (
     <>
@@ -179,193 +195,76 @@ export default function FamilyPage() {
         </div>
       </section>
 
-      <section className="family-navigation">
-        <div className="container">
-          <div className="family-tabs font-size-8">
-            {['all','trapezoidales','etroites','automobiles','synchrones','variateur','speciales'].map(key => (
-              <button key={key} className={`family-tab ${family === key ? 'active' : ''}`} data-family={key} onClick={() => setFamily(key)}>
-                <i className={`fas ${key==='automobiles'?'fa-car':'fa-cog'}`}></i>
-                <span>{key==='all'? t('allFamilies'): families[key]?.name}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="advanced-filters">
-        <div className="container">
+        <div className='container'>
           <div className="filters-container">
             <div className="filter-group">
-              <label htmlFor="searchFilter">{t('search')}</label>
-              <div className="search-input">
-                <input type="text" id="searchFilter" placeholder={t('searchProducts')} value={search} onChange={e => setSearch(e.target.value)} />
-                <i className="fas fa-search"></i>
+              <label>{t('search')}</label>
+              <input type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder={t('searchProducts')} />
+            </div>
+              <div className="filter-group">
+                <label>{t('profile')}</label>
+                <select value={profile} onChange={e => setProfile(e.target.value)}>
+                  <option value="">{t('allProfiles')}</option>
+                  {profileOptions.map(p => (
+                    <option key={p} value={p}>{p}</option>
+                  ))}
+                </select>
               </div>
-            </div>
+
+              <div className="filter-group">
+                <label>{t('materials')}</label>
+                <select value={material} onChange={e => setMaterial(e.target.value)}>
+                  <option value="">{t('allMaterials')}</option>
+                  {materialOptions.map(m => (
+                    <option key={m} value={m}>{m}</option>
+                  ))}
+                </select>
+              </div>
             <div className="filter-group">
-              <label htmlFor="profileFilter">{t('profile')}</label>
-              <select id="profileFilter" value={profile} onChange={e => setProfile(e.target.value)}>
-                <option value="">{t('allProfiles')}</option>
-                {profileOptions.map(p => <option key={p} value={p}>{p}</option>)}
+              <label>{t('length')}</label>
+              <select value={dimensions.length_min} onChange={e => setDimensions({...dimensions, length_min: e.target.value})}>
+                <option value="">{t('select')}</option>
+                {lengthOptions.map(l => <option key={l} value={l}>{l} mm</option>)}
               </select>
             </div>
             <div className="filter-group">
-              <label htmlFor="materialFilter">{t('materials')}</label>
-              <select id="materialFilter" value={material} onChange={e => setMaterial(e.target.value)}>
-                <option value="">{t('allMaterials')}</option>
-                {['CR Rubber','EPDM','PU','Kevlar','Polyester','Fibre de verre'].map(m => <option key={m} value={m}>{m}</option>)}
+              <label>{t('width')}</label>
+              <select value={dimensions.width_min} onChange={e => setDimensions({...dimensions, width_min: e.target.value})}>
+                <option value="">{t('select')}</option>
+                {widthOptions.map(w => <option key={w} value={w}>{w} mm</option>)}
               </select>
             </div>
             <div className="filter-group">
-              <label htmlFor="stockFilter">Stock</label>
-              <select id="stockFilter" value={stock} onChange={e => setStock(e.target.value)}>
-                <option value="">{t('allStock')}</option>
-                <option value="in-stock">{t('inStock')}</option>
-                <option value="low-stock">{t('inStock')}</option>
-                <option value="out-of-stock">{t('outOfStock')}</option>
+              <label>{t('thickness')}</label>
+              <select value={dimensions.thickness_min} onChange={e => setDimensions({...dimensions, thickness_min: e.target.value})}>
+                <option value="">{t('select')}</option>
+                {thicknessOptions.map(t => <option key={t} value={t}>{t} mm</option>)}
               </select>
-            </div>
-            <div className="filter-actions">
-              <button id="clearFilters" className="btn-secondary" onClick={() => { setFamily('all'); setProfile(''); setMaterial(''); setStock(''); setSearch(''); setDimensions({ length_min: '', length_max: '', width_min: '', width_max: '', thickness_min: '', thickness_max: '' }); }}>{t('clear')}</button>
-              <button id="applyFilters" className="cta-button primary" onClick={() => { /* computed reactively */ }}>{t('apply')}</button>
             </div>
           </div>
-          <div style={{ marginTop: '20px', textAlign: 'center' }}>
-            <button
-              onClick={() => setShowDimensionSearch(!showDimensionSearch)}
-              style={{
-                background: showDimensionSearch ? '#2563eb' : 'white',
-                color: showDimensionSearch ? 'white' : '#2563eb',
-                border: '2px solid #2563eb',
-                borderRadius: '8px',
-                padding: '12px 20px',
-                cursor: 'pointer',
-                fontWeight: '600',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px'
-              }}
-            >
-              <i className="fas fa-ruler-combined"></i>
-              {showDimensionSearch ? t('hide') : t('dimensionSearch')}
-              <i className={`fas fa-chevron-${showDimensionSearch ? 'up' : 'down'}`} style={{ marginLeft: '5px' }}></i>
-            </button>
-          </div>
-          {showDimensionSearch && (
-            <div style={{
-              background: 'white',
-              borderRadius: '12px',
-              padding: '25px',
-              marginTop: '20px',
-              boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-              border: '1px solid #e5e7eb'
-            }}>
-              <h3 style={{ color: '#1e293b', marginBottom: '20px', fontSize: '1.3rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <i className="fas fa-ruler-combined" style={{ color: '#2563eb' }}></i>
-                {t('searchByDimensions')}
-              </h3>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
-                <div>
-                  <label style={{ display: 'block', fontWeight: '600', color: '#475569', marginBottom: '8px' }}>
-                    <i className="fas fa-arrows-alt-h" style={{ marginRight: '8px', color: '#2563eb' }}></i>
-                    {t('length')} (mm)
-                  </label>
-                  <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                    <input type="number" placeholder={t('min')} value={dimensions.length_min} onChange={e => setDimensions({...dimensions, length_min: e.target.value})} style={{ width: '100%', padding: '10px', border: '2px solid #e5e7eb', borderRadius: '8px', fontSize: '1rem' }} min="0" step="0.1" />
-                    <span style={{ color: '#64748b' }}>-</span>
-                    <input type="number" placeholder={t('max')} value={dimensions.length_max} onChange={e => setDimensions({...dimensions, length_max: e.target.value})} style={{ width: '100%', padding: '10px', border: '2px solid #e5e7eb', borderRadius: '8px', fontSize: '1rem' }} min="0" step="0.1" />
-                  </div>
-                </div>
-                <div>
-                  <label style={{ display: 'block', fontWeight: '600', color: '#475569', marginBottom: '8px' }}>
-                    <i className="fas fa-arrows-alt-v" style={{ marginRight: '8px', color: '#2563eb' }}></i>
-                    {t('width')} (mm)
-                  </label>
-                  <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                    <input type="number" placeholder={t('min')} value={dimensions.width_min} onChange={e => setDimensions({...dimensions, width_min: e.target.value})} style={{ width: '100%', padding: '10px', border: '2px solid #e5e7eb', borderRadius: '8px', fontSize: '1rem' }} min="0" step="0.1" />
-                    <span style={{ color: '#64748b' }}>-</span>
-                    <input type="number" placeholder={t('max')} value={dimensions.width_max} onChange={e => setDimensions({...dimensions, width_max: e.target.value})} style={{ width: '100%', padding: '10px', border: '2px solid #e5e7eb', borderRadius: '8px', fontSize: '1rem' }} min="0" step="0.1" />
-                  </div>
-                </div>
-                <div>
-                  <label style={{ display: 'block', fontWeight: '600', color: '#475569', marginBottom: '8px' }}>
-                    <i className="fas fa-compress" style={{ marginRight: '8px', color: '#2563eb' }}></i>
-                    {t('thickness')} (mm)
-                  </label>
-                  <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                    <input type="number" placeholder={t('min')} value={dimensions.thickness_min} onChange={e => setDimensions({...dimensions, thickness_min: e.target.value})} style={{ width: '100%', padding: '10px', border: '2px solid #e5e7eb', borderRadius: '8px', fontSize: '1rem' }} min="0" step="0.1" />
-                    <span style={{ color: '#64748b' }}>-</span>
-                    <input type="number" placeholder={t('max')} value={dimensions.thickness_max} onChange={e => setDimensions({...dimensions, thickness_max: e.target.value})} style={{ width: '100%', padding: '10px', border: '2px solid #e5e7eb', borderRadius: '8px', fontSize: '1rem' }} min="0" step="0.1" />
-                  </div>
-                </div>
-              </div>
-              <div style={{ marginTop: '20px', display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
-                <button onClick={() => setDimensions({ length_min: '', length_max: '', width_min: '', width_max: '', thickness_min: '', thickness_max: '' })} style={{ padding: '10px 20px', background: '#f1f5f9', border: 'none', borderRadius: '8px', color: '#475569', cursor: 'pointer', fontWeight: '600' }}>
-                  <i className="fas fa-redo" style={{ marginRight: '8px' }}></i>
-                  {t('reset')}
-                </button>
-              </div>
-            </div>
-          )}
         </div>
       </section>
 
-      <section className="products-display">
-        <div className="container">
-          <div className="products-header">
-            <div className="products-info">
-              <h2 id="familyTitle">{family==='all'? t('allFamilies'): (families[family]?.name || t('families'))}</h2>
-            </div>
-            <div className="view-controls">
-              <button className={`view-btn ${view==='grid'?'active':''}`} data-view="grid" onClick={() => setView('grid')}><i className="fas fa-th"></i></button>
-              <button className={`view-btn ${view==='list'?'active':''}`} data-view="list" onClick={() => setView('list')}><i className="fas fa-list"></i></button>
-            </div>
-          </div>
-          <div id="productsContainer" className={`products-container ${view}-view`}>
-            {toShow.length === 0 ? (
-              <div className="empty-state">
-                <i className="fas fa-search"></i>
-                <h3>{t('noProductsFound')}</h3>
-                <p>{t('tryModifyFilters')}</p>
-                <button className="cta-button primary" onClick={() => { setFamily('all'); setProfile(''); setMaterial(''); setStock(''); setSearch(''); }}>{t('resetFilters')}</button>
-              </div>
-            ) : toShow.map(product => (
-              <div className="product-card" data-id={product.id} data-family={product.category} key={product.id}>
-                <div className="product-image">
-                  <img src={product.image_url} alt={product.name} loading="lazy" />
-                  <div className="product-badge">{product.profile}</div>
-                </div>
-                <div className="product-info">
-                  <h3>{product.name}</h3>
-                  <div className="product-profile">{t('profile')}: {product.profile}</div>
-                  <p className="product-description">{product.description}</p>
-                  <div className="product-specs">{product.specifications}</div>
-                  <div className="product-actions">
-                    <button className="btn-add-cart" onClick={() => add(product)}>
-                      <i className="fas fa-cart-plus"></i> {t('add')}
-                    </button>
-                    <button className="btn-quote" onClick={() => { add(product, 1); window.dispatchEvent(new CustomEvent('open-quote')); }}>
-                      <i className="fas fa-file-invoice"></i> {t('quote')}
-                    </button>
-                    <button className="btn-details" onClick={() => navigate(`/product/${product.id}`)}>{t('details')}</button>
-                  </div>
-                </div>
+      <section className="products-section">
+        {toShow.length === 0 ? (
+          <div className="empty-state">{t('noProductsFound')}</div>
+        ) : (
+          <div className="products-grid">
+            {toShow.map(product => (
+              <div key={product.id} className="product-card">
+                <img src={product.image_url} alt={product.nom} />
+                <h3>{product.nom}</h3>
+                <p>{product.profil}</p>
+                <button onClick={() => add(product)}>{t('addToCart')}</button>
               </div>
             ))}
           </div>
-          <div className="load-more-section">
-            {endIndex < filtered.length && (
-              <button id="loadMoreBtn" className="cta-button secondary" onClick={() => setPage(p => p + 1)}>
-                <i className="fas fa-plus"></i> {t('loadingMore')}
-              </button>
-            )}
-          </div>
-        </div>
+        )}
+        {endIndex < filtered.length && (
+          <button onClick={() => setPage(p => p + 1)}>{t('loadMore')}</button>
+        )}
       </section>
     </>
   );
 }
-
-function stockStatus(stock){ if (stock===0) return 'Rupture'; if (stock<10) return 'Stock faible'; return 'En stock'; }
-function stockClass(stock){ if (stock===0) return 'out-of-stock'; if (stock<10) return 'low-stock'; return 'in-stock'; }
-

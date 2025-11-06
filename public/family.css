@@ -49,6 +49,8 @@
 .filter-group select:focus { outline: none; border-color: #2563eb; }
 .filter-actions { display: flex; gap: 1rem; align-items: end; }
 .filter-actions button { padding: 0.75rem 1.5rem; border-radius: 10px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem; }
+.filter-group input { position:flex ; padding: 0.75rem 1rem; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; background: white; transition: border-color 0.3s ease; }
+.filter-group input:focus { outline: none; border-color: #2563eb; }
 
 .products-display { padding: 3rem 0; background: white; }
 .products-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
