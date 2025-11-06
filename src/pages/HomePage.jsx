@@ -1,47 +1,20 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import ShowcaseComponent from '../components/Showcase.jsx';
+import HeroSlideshow from '../components/HeroSlideshow';
+import { useSelector } from 'react-redux';
 export default function HomePage() {
   
-  const { t } = useLanguage();
-
+  const { t } = useLanguage(); 
 
   return (
     <>
-      <section id="home" className="hero">
-        <div className="hero-content">
-          <div className="hero-text">
-            <h1>{t('heroTitle')}</h1>
-            <h2>{t('heroSubtitle')}</h2>
-            <p>{t('heroDescription')}</p>
-            <div style={{ display: 'flex', gap: '20px', marginTop: '30px', flexWrap: 'wrap' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#64748b' }}>
-                <i className="fas fa-check-circle" style={{ color: '#10b981' }}></i>
-                <span>{t('fastDelivery')}</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#64748b' }}>
-                <i className="fas fa-shield-alt" style={{ color: '#2563eb' }}></i>
-                <span>{t('guaranteedQuality')}</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#64748b' }}>
-                <i className="fas fa-headset" style={{ color: '#10b981' }}></i>
-                <span>Support Expert </span>
-              </div>
-            </div>
-            <div className="hero-buttons">
-              <a className="cta-button primary" href="/family">{t('discoverProducts')}</a>
-              <button className="cta-button secondary">{t('downloadCatalog')}</button>
-            </div>
-          </div>
-          <div className="hero-image">
-            <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="KORTIBELT Transmission de puissance" />
-          </div>
-        </div>
-      </section>
 
      
-
+      <HeroSlideshow />
+      <FamillySection />
       <ShowcaseComponent />
+      
       {/* Trust badges */}
       <section style={{ background: '#f8f9fa', padding: '40px 0' }}>
         <div className="container">
@@ -90,6 +63,40 @@ function ApplicationsSection(){
           <div className="application-card"><i className="fas fa-tractor"></i><h3>{t('agriculture')}</h3><p>{t('tractors')}</p></div>
           <div className="application-card"><i className="fas fa-robot"></i><h3>{t('automation')}</h3><p>{t('robots')}</p></div>
           <div className="application-card"><i className="fas fa-conveyor-belt"></i><h3>{t('conveyors')}</h3><p>{t('productTransport')}</p></div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FamillySection(){
+    const { t, language } = useLanguage(); 
+
+  const family = useSelector(state => state.family.list );
+  console.log("Families from Redux:", family);
+  return (
+ <section id="applications" className="applications">
+      <div className="container">
+        <h2 className="section-title">{t('family')}</h2>
+
+        <div className="applications-grid">
+          {family && family.length > 0 ? (
+            family.map((fam) => (
+              <div key={fam.id} className="application-card">
+                <i className="fas fa-cog"></i>
+                <h3>
+                  {language === 'fr' ? fam.nomFrancais : fam.nomAnglais}
+                </h3>
+                <p>
+                  {language === 'fr'
+                    ? fam.descriptionFrancais
+                    : fam.descriptionAnglais}
+                </p>
+              </div>
+            ))
+          ) : (
+            <p>{t('loading')}...</p>
+          )}
         </div>
       </div>
     </section>

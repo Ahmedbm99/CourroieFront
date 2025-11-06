@@ -1,12 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { use, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { apiService } from '../services/apiService.js';
+import Api from '../services/Api';
 import useCart from '../hooks/useCart.js';
-import { families as familiesMeta } from '../data/families.js';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useSelector } from 'react-redux';
 
-const families = Object.fromEntries(Object.entries(familiesMeta).map(([k,v]) => [k, { name: v.title, profiles: v.profiles }]));
-// mockProducts.js
 export const mockProducts = [
   {
     id: 1,
@@ -81,7 +79,8 @@ export default function FamilyPage() {
   const [filtered, setFiltered] = useState([]);
   const params = useParams();
   const navigate = useNavigate();
-  const [family, setFamily] = useState(params.familyKey || 'all');
+  const family = useSelector(state => state.family.list.length > 0 && params.familyKey ? state.family.list.find(f => f.id.toString() === params.familyKey)?.nomFrancais.toLowerCase() : 'all');
+
   const [profile, setProfile] = useState('');
   const [material, setMaterial] = useState('');
   const [stock, setStock] = useState('');
@@ -99,7 +98,7 @@ export default function FamilyPage() {
   const [page, setPage] = useState(1);
   const productsPerPage = 12;
   const { add } = useCart();
-  const { t } = useLanguage();
+  const { t} = useLanguage();
 
   useEffect(() => {
     (async () => {

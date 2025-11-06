@@ -79,7 +79,19 @@ export const translations = {
     downloadExternalSheet: 'Télécharger la fiche externe',
     productNotFound: 'Produit non trouvé',
     loading: 'Chargement du produit...',
-    
+    caoutchouc: 'Caoutchouc',
+    pu: 'Polyuréthane (PU)',
+    speciale: 'Spéciale',
+    family: 'Famille',
+    courroieSpeciale: 'Aramide, HNBR, Silicone, Courroies ignifugées...',
+    courroiePu: 'T2.5, T5, T10, T20, AT5...',
+    courroieCaoutechouc: 'Trapézoïdales, HTD & STD & RPP, Poly-V...',
+
+    //vitrine
+    power: 'Kortibelt pour La puissance',
+    precision: 'Kortibelt assure La précision',
+    solution: 'Kortibelt est La solution',
+
     // Quote
     quoteRequest: 'Demande de devis',
     fullName: 'Nom complet',
@@ -291,6 +303,11 @@ export const translations = {
     sending: 'Sending...',
     onQuote: 'On quote',
     
+    //showcase
+    power: 'Kortibelt for Power',
+    precision: 'Kortibelt ensures Precision',
+    solution: 'Kortibelt is the Solution',
+
     // Help
     needHelp: 'Need help?',
     helpAndAdvice: 'Help & Advice',
@@ -357,9 +374,15 @@ export const translations = {
     machinesPumps: 'Machines, pumps, compressors',
     engines: 'Engines, alternators, air conditioning',
     tractors: 'Tractors, harvesters',
+    courroieSpeciale: 'Aramid, HNBR, Silicone, Fire resistant..',
+    courroiePu: 'T2.5, T5, T10, T20, AT5..',
+    courroieCaoutechouc: 'Courroie Trapézoïdale, HTD & STD & RPP Timing belts, Poly-V belts..',
     robots: 'Robots, CNC, packaging',
     productTransport: 'Product transport',
-    
+    caoutchouc: 'Rubber',
+    pu: 'Polyurethane (PU)',
+    speciale: 'Special',
+    family: 'Family',
     // Toast messages
     quoteSuccess: 'Quote request sent successfully!',
     quoteError: 'Error sending quote',

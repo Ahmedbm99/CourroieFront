@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import useCart from '../hooks/useCart.js';
-import { apiService } from '../services/apiService.js';
+import Api from '../services/Api';
 import { useLanguage } from '../contexts/LanguageContext';
 
 export default function CartPage() {
@@ -25,7 +25,7 @@ export default function CartPage() {
     
     try {
       setSubmitting(true);
-      await apiService.createQuote({
+   /*   await apiService.createQuote({
         customerInfo: {
           name: data.name,
           email: data.email,
@@ -34,7 +34,7 @@ export default function CartPage() {
         },
         products: items,
         message: data.message
-      });
+      });*/
       clear();
       setShowQuoteModal(false);
       e.currentTarget.reset();

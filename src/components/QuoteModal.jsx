@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import useCart from '../hooks/useCart.js';
-import { apiService } from '../services/apiService.js';
+import  Api  from '../services/Api.js';
 import { useLanguage } from '../contexts/LanguageContext';
 
 export default function QuoteModal() {
@@ -21,7 +21,7 @@ export default function QuoteModal() {
     const data = Object.fromEntries(formData);
     try {
       setSubmitting(true);
-      await apiService.createQuote({
+      /*await apiService.createQuote({
         customerInfo: {
           name: data.name,
           email: data.email,
@@ -30,7 +30,7 @@ export default function QuoteModal() {
         },
         products: items,
         message: data.message
-      });
+      }); */
       clear();
       setOpen(false);
       e.currentTarget.reset();

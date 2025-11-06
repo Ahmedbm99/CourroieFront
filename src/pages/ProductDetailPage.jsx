@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { apiService } from '../services/apiService.js';
 import useCart from '../hooks/useCart.js';
 import { families } from '../data/families.js';
 import { useLanguage } from '../contexts/LanguageContext';

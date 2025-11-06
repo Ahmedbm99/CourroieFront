@@ -15,7 +15,7 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 15px;
 }
 
 /* Header Styles */
@@ -45,23 +45,27 @@ body {
 
 .logo h2 {
     color: #2563eb;
-    font-weight: 700;
-    font-size: 1.8rem;
-    margin: 0;
+    font-weight: 400;
+    font-size: 2rem;
+    
+    
 }
 
-.logo-subtitle {
+.logo-subtitle a {
     color: #64748b;
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: 200;
     display: block;
     margin-top: -5px;
+    text-decoration: none;
 }
 
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 2rem;
+    gap: 2.0rem;
+    
+
 }
 
 .nav-menu a {
@@ -86,15 +90,29 @@ body {
     top: 100%;
     left: 0;
     background: white;
+    overflow-y: auto;
     min-width: 250px;
+    max-height: 730px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     z-index: 1000;
     padding: 1rem 0;
+    flex-direction: column;
+    transition: all 0.25s ease-in-out;
+     column-count:4;        /* creates 2 columns automatically */
+  column-gap: 25px;
+
 }
 
 .dropdown:hover .dropdown-content {
     display: block;
+}
+.dropdown-content::-webkit-scrollbar {
+  width: 6px;
+}
+.dropdown-content::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 3px;
 }
 
 .dropdown-content a {
