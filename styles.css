@@ -103,6 +103,92 @@ body {
   column-gap: 25px;
 
 }
+/* Mobile submenu container */
+.mobile-submenu {
+  list-style: none;
+  padding-left: 1rem; /* indent for subitems */
+  margin: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  overflow: hidden;
+}
+
+/* Each submenu item */
+.mobile-submenu li {
+  background-color: #f9f9f9;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.mobile-submenu li:hover {
+  background-color: #e0e0e0;
+}
+
+/* Link styling inside submenu */
+.mobile-submenu li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  display: block;
+}
+
+/* Optional: animation when expanding/collapsing */
+.mobile-submenu.open {
+  max-height: 500px; /* arbitrary large value */
+  opacity: 1;
+}
+
+.mobile-submenu.closed {
+  max-height: 0;
+  opacity: 0;
+}
+/* Mobile submenu container */
+.mobile-submenu {
+  list-style: none;
+  padding-left: 1rem; /* indent for subitems */
+  margin: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  
+}
+
+/* Each submenu item */
+.mobile-submenu li {
+  background-color: #f9f9f9;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.mobile-submenu li:hover {
+  background-color: #e0e0e0;
+}
+
+/* Link styling inside submenu */
+.mobile-submenu li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 300;
+  display: block;
+}
+
+/* Optional: animation when expanding/collapsing */
+.mobile-submenu.open {
+   /* arbitrary large value */
+  opacity: 1;
+}
+
+.mobile-submenu.closed {
+  max-height: 0;
+  opacity: 0;
+}
 
 .dropdown:hover .dropdown-content {
     display: block;
@@ -402,6 +488,16 @@ body {
 .application-card h3 { font-size: 1.3rem; font-weight: 600; margin-bottom: 0.5rem; }
 .application-card p { color: #64748b; transition: color 0.3s ease; }
 .application-card:hover p { color: rgba(255, 255, 255, 0.9); }
+
+.familycard { padding: 6rem 0; background: #f8fafc; }
+.familycard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; }
+.familycard-card { text-align: center; padding: 2rem; border-radius: 20px; background: white; transition: all 0.3s ease; cursor: pointer; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); }
+.familycard-card:hover { background: #2563eb; color: white; transform: translateY(-10px); box-shadow: 0 20px 40px rgba(37, 99, 235, 0.3); }
+.familycard-card i { font-size: 3rem; color: #2563eb; margin-bottom: 1rem; transition: color 0.3s ease; }
+.familycard-card:hover i { color: white; }
+.familycard-card h3 { font-size: 1.3rem; font-weight: 600; margin-bottom: 0.5rem; }
+.familycard-card p { color: #64748b; transition: color 0.3s ease; }
+.familycard-card:hover p { color: rgba(255, 255, 255, 0.9); }
 
 .about { padding: 6rem 0; background: #f8fafc; }
 .about-content { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
