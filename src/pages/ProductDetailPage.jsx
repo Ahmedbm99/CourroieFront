@@ -197,10 +197,7 @@ export default function ProductDetailPage() {
               <h2 style={{ fontSize: '1.5rem', color: '#1e293b', marginBottom: '20px', borderBottom: '2px solid #e5e7eb', paddingBottom: '10px' }}>
                 {t('productDetails')}
               </h2>
-    <div style={{ background: 'white', borderRadius: '12px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.1)', marginBottom: '30px' }}>
-  <h2 style={{ fontSize: '1.5rem', color: '#1e293b', marginBottom: '20px', borderBottom: '2px solid #e5e7eb', paddingBottom: '10px' }}>
-    {t('productDetails')}
-  </h2>
+
 
   {[
     { key: 'profil', label: t('Profile') },
@@ -258,7 +255,7 @@ export default function ProductDetailPage() {
                 </div>
           </div>
         </div>
-      </div>
+     
    
   );
 }

@@ -12,7 +12,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
      <LanguageProvider>
-    <BrowserRouter basename="/CourroieFront">
+    <BrowserRouter basename="/CourroieFront/">
      
         <App />
 
