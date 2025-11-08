@@ -9,7 +9,7 @@ import { setBelt } from '../store/beltSlice.js';
 export default function FamilyPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { language } = useLanguage();
+  const { t, language } = useLanguage();
   const family = useSelector(state => state.family.list);
   const type = useSelector(state => state.type.list);
   const [allProducts, setAllProducts] = useState([]);
@@ -95,6 +95,7 @@ export default function FamilyPage() {
     <>
       <section className="family-hero">
         <div className="container">
+  
           <div className="hero-content">
             <h1>{language === 'fr' ? 'Familles de courroies' : 'Belt Families'}</h1>
             <p>{language === 'fr' ? 'Découvrez nos produits' : 'Explore our products'}</p>
@@ -109,6 +110,22 @@ export default function FamilyPage() {
 
       <section className="family-navigation">
         <div className="container">
+                        <button
+          onClick={() => navigate(-1)}
+          style={{
+            background: 'none',
+            border: 'none',
+            color: '#2563eb',
+            cursor: 'pointer',
+            fontSize: '1rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            marginBottom: '20px'
+          }}
+        >
+          <i className="fas fa-arrow-left"></i> {t('back')}
+        </button>
           <div className="family-tabs">
             <button className={`family-tab ${!selectedFamily ? 'active' : ''}`} onClick={() => {
           setSelectedFamily(null);
@@ -129,6 +146,7 @@ export default function FamilyPage() {
           </div>
         </div>
       </section>
+
                     {selectedFamily && (
           <section className="family-navigation">
         <div className="container">

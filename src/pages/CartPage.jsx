@@ -121,7 +121,7 @@ export default function CartPage() {
                     background: '#f8f9fa'
                   }}>
                     <img
-                      src={item.image_url}
+                      src={`https://ahmedbm99.github.io/CourroieFront${item.image_url}`}
                       alt={item.name}
                       style={{
                         width: '100%',
@@ -321,7 +321,7 @@ export default function CartPage() {
                     {total > 0 && (
                       <div className="quote-summary-item">
                         <span><strong>{t('total')}</strong></span>
-                        <span><strong>{total.toFixed(2)} TND</strong></span>
+                        <span><strong>{total.toFixed(1)} TND</strong></span>
                       </div>
                     )}
                   </div>
