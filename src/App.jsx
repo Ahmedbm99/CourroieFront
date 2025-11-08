@@ -25,7 +25,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/family" element={<FamilyPage />} />
-        <Route path="/family/:familyKey" element={<FamilyPage />} />
+        <Route path="/family/:id" element={<FamilyPage />} />
+        <Route path="/family/:familyKey/:typekey" element={<FamilyPage />} />
         <Route path="/product/:id" element={<ProductDetailPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/about" element={<AboutPage />} />

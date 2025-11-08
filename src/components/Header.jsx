@@ -115,7 +115,7 @@ export default function Header() {
                         .map((type) => (
                           <NavLink
                             key={type.id}
-                            to={`/family/${type.id}`}
+                            to={`/family/${type.famille_id}/${type.id}`}
                             onClick={() => setMobileOpen(false)}
                           >
                             {language === 'fr'
@@ -134,7 +134,7 @@ export default function Header() {
                         .map((type) => (
                           <li key={type.id}>
                             <NavLink
-                              to={`/family/${type.id}`}
+                              to={`/family/${type.famille_id}/${type.id}`}
                               onClick={() => setMobileOpen(false)}
                             >
                               {language === 'fr'
