@@ -34,6 +34,7 @@ export default function FamilyPage() {
         let response;
         if (familyKey !== 'all') {
           response = await BeltServices.getBeltsByFamilyAndType(familyKey, typeId);
+        
         } else {
           response = await BeltServices.getAllBelts();
         }
@@ -237,7 +238,7 @@ export default function FamilyPage() {
             toShow.map(product => (
               <div className="product-card" key={product.id}>
                 <div className="product-image">
-                  <img src={`.${product.image_url}`} alt={getProductName(product)} loading="lazy" />
+                  <img src={`https://ahmedbm99.github.io/CourroieFront${product.image_url}`} alt={getProductName(product)} loading="lazy" />
                   <div className="product-badge">{getProductName(product)}</div>
                 </div>
                 <div className="product-info">

@@ -47,7 +47,7 @@ export default function ProductDetailPage() {
   const handleDownloadDatasheet = () => {
     if (!product?.fiche_technique_url) return;
     const link = document.createElement('a');
-    link.href = `.${product.fiche_technique_url}`;
+    link.href = `https://ahmedbm99.github.io/CourroieFront${product.fiche_technique_url}`;
     link.download = `Datasheet-${product.nom}.pdf`;
     link.target = '_blank';
     document.body.appendChild(link);
@@ -129,7 +129,7 @@ export default function ProductDetailPage() {
                 }}
               >
                 <img
-                  src={`.${product.image_url}`}
+                  src={`https://ahmedbm99.github.io/CourroieFront${product.image_url}`}
                   alt={product.nom}
                   style={{
                     position: 'absolute',
