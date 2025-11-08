@@ -237,7 +237,7 @@ export default function FamilyPage() {
             toShow.map(product => (
               <div className="product-card" key={product.id}>
                 <div className="product-image">
-                  <img src={`https://courroie-back-dpf44854c-ahmedbm99s-projects.vercel.app${product.image_url}`} alt={getProductName(product)} loading="lazy" />
+                  <img src={`.${product.image_url}`} alt={getProductName(product)} loading="lazy" />
                   <div className="product-badge">{getProductName(product)}</div>
                 </div>
                 <div className="product-info">
