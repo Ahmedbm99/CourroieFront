@@ -97,7 +97,7 @@ function FamillySection(){
         <div className="familycard-grid" >
           {family && family.length > 0 ? (
             family.map((fam) => (
-              <div key={fam.id} className="familycard-card" >
+              <div key={fam.id} className="familycard-card" onClick={() => navigate(`/family/${fam.id}`)} style={{ cursor: "pointer" }}>
                 <i className="fas fa-cog"></i>
                 <h3>
                   {language === 'fr' ? fam.nomFrancais : fam.nomAnglais}
