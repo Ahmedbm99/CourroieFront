@@ -156,14 +156,14 @@ export default function ProductDetailPage() {
                 )}
               {currentMaterial && (
               <img
-                src={`https://ahmedbm99.github.io/CourroieFront/public/badges/${
+                src={`https://ahmedbm99.github.io/CourroieFront/badges/${
                   currentMaterial === 'CR'
-                    ? 'power.png'
+                    ? 'power.jpg'
                     : currentMaterial === 'CR+NR' || currentMaterial === 'NR+CR'
-                    ? 'standard.png'
+                    ? 'standard.jpg'
                     : currentMaterial === 'EPDM'
-                    ? 'ultra.png'
-                    : 'titan.png'
+                    ? 'ultra.jpg'
+                    : 'titan.jpg'
                 }`}
                 alt={currentMaterial}
                 style={{
