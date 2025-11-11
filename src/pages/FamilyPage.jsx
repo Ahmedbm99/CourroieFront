@@ -48,7 +48,7 @@ useEffect(() => {
           p.application && p.application.toLowerCase() === applicationFilter.toLowerCase()
         );
       }
-
+      console.log('Fetched products:', data);
       setAllProducts(data);
       setFiltered(data);
       setProducts(data); 
