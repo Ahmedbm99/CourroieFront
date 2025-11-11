@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+
 import useCart from '../hooks/useCart.js';
 import { useLanguage } from '../contexts/LanguageContext';
 import BeltsServices from '../services/BeltsServices.js';
@@ -15,6 +16,10 @@ export default function ProductDetailPage() {
   const types = useSelector(state => state.type.list);
 
   const [product, setProduct] = useState(null);
+  const [Fiche, setFiche] = useState([]);
+  const [Images, setImages] = useState([]);
+  const [Matieres, setMatieres] = useState([]); 
+  const [currentMaterialIndex, setCurrentMaterialIndex] = useState(0); 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -30,6 +35,9 @@ export default function ProductDetailPage() {
       try {
         const response = await BeltsServices.getBeltById(id);
         setProduct(response.data);
+        setFiche(response.data.Fiches || []);
+        setImages(response.data.Images || []);
+        setMatieres(response.data.Matieres || []);
       } catch (err) {
         setError(t('productNotFound'));
         console.error(err);
@@ -45,9 +53,9 @@ export default function ProductDetailPage() {
   };
 
   const handleDownloadDatasheet = () => {
-    if (!product?.fiche_technique_url) return;
+    if (!Fiche || Fiche.length === 0) return;
     const link = document.createElement('a');
-    link.href = `https://ahmedbm99.github.io/CourroieFront${product.fiche_technique_url}`;
+    link.href = `https://ahmedbm99.github.io/CourroieFront${currentFiche}`;
     link.download = `Datasheet-${product.nom}.pdf`;
     link.target = '_blank';
     document.body.appendChild(link);
@@ -55,32 +63,35 @@ export default function ProductDetailPage() {
     document.body.removeChild(link);
   };
 
+  const handleNextMaterial = () => {
+    if (Matieres.length > 1) {
+      setCurrentMaterialIndex((prevIndex) => (prevIndex + 1) % Matieres.length);
+    }
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error || !product) return <p>{t('productNotFound')}</p>;
 
   const family = families.find(f => f.id === product.famille_courroie_id);
   const type = types.find(t => t.id === product.type_courroie_id);
-
+  const currentMaterial = Matieres[currentMaterialIndex]?.matiere || '-';
+  const currentImage = Images[currentMaterialIndex]?.image_url || Images[0]?.image_url || null;
+  const currentFiche = Fiche[currentMaterialIndex]?.fiche_technique_url || Fiche[0]?.fiche_technique_url || null;
   const specs = Object.entries(product).filter(
     ([key, value]) =>
       value !== null &&
       ![
-        'id',
-        'nom',
-        'nomFrancais',
-        'nomAnglais',
-        'descriptionFrancais',
-        'descriptionAnglais',
-        'famille_courroie_id',
-        'type_courroie_id',
-        'image_url',
-        'fiche_technique_url',
-        'profil'
+        'id', 'nom', 'nomFrancais', 'nomAnglais',
+        'descriptionFrancais', 'descriptionAnglais',
+        'famille_courroie_id', 'type_courroie_id',
+        'image_url', 'fiche_technique_url', 'profil'
       ].includes(key)
   );
 
   return (
-    <div style={{ paddingTop: '100px', minHeight: '100vh' }}>
+   
+    <div style={{ paddingTop: '200px', minHeight: '100vh' }}>
+      
       <div className="container">
         <button
           onClick={() => navigate(-1)}
@@ -128,17 +139,47 @@ export default function ProductDetailPage() {
                   overflow: 'hidden'
                 }}
               >
-                <img
-                  src={`https://ahmedbm99.github.io/CourroieFront${product.image_url}`}
-                  alt={product.nom}
-                  style={{
-                    position: 'absolute',
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    borderRadius: '8px'
-                  }}
-                />
+                {Images[0] ? (
+                  <img
+                    src={`https://ahmedbm99.github.io/CourroieFront${currentImage }`}
+                    alt={product.nom}
+                    style={{
+                      position: 'absolute',
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      borderRadius: '8px'
+                    }}
+                  />
+                ) : (
+                  <p style={{ textAlign: 'center', paddingTop: '40%' }}>{t('imageInavailable')}</p>
+                )}
+              {currentMaterial && (
+              <img
+                src={`https://ahmedbm99.github.io/CourroieFront/public/badges/${
+                  currentMaterial === 'CR'
+                    ? 'power.png'
+                    : currentMaterial === 'CR+NR' || currentMaterial === 'NR+CR'
+                    ? 'standard.png'
+                    : currentMaterial === 'EPDM'
+                    ? 'ultra.png'
+                    : 'titan.png'
+                }`}
+                alt={currentMaterial}
+                style={{
+                  position: 'absolute',
+                  top: '15px',
+                  left: '15px',
+                  width: '150px',
+                  height: '100px',
+                  objectFit: 'contain',
+                  borderRadius: '20%',
+                  background: 'rgba(255, 255, 255, 0.8)',
+                  padding: '5px',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+                }}
+              />
+            )}
                 {product.profile && (
                   <div
                     style={{
@@ -162,7 +203,7 @@ export default function ProductDetailPage() {
                 <button className="btn-secondary" onClick={handleAddToCart}>
                   {t('addToCart')}
                 </button>
-                {product.fiche_technique_url && (
+                {Fiche.length > 0 && (
                   <button className="btn-secondary" onClick={handleDownloadDatasheet}>
                     {t('downloadDatasheet')}
                   </button>
@@ -175,87 +216,59 @@ export default function ProductDetailPage() {
           <div>
             <h1>{language === 'fr' ? product.nomFrancais || product.nom : product.nomAnglais || product.nom}</h1>
 
-
-         <div style={{ display: 'flex', padding: '15px', background: '#f8f9fa', borderRadius: '8px' }}>
-                  <span style={{ fontWeight: 'bold', color: '#64748b', minWidth: '150px' }}>{t('Nom de famille')}:</span>
-                  <span style={{ color: '#1e293b' }}> {family ? (language === 'fr' ? family.nomFrancais : family.nomAnglais) : '-'}</span>
-                </div>
-               <div style={{ display: 'flex', padding: '15px', background: '#f8f9fa', borderRadius: '8px' }}>
-                  <span style={{ fontWeight: 'bold', color: '#64748b', minWidth: '150px' }}>{t('description famille')}:</span>
-                  <span style={{ color: '#1e293b' }}> {(language === 'fr' ? family.descriptionFrancais : family.descriptionAnglais)}</span>
-                </div>
-               <div style={{ display: 'flex', padding: '15px', background: '#f8f9fa', borderRadius: '8px' }}>
-                  <span style={{ fontWeight: 'bold', color: '#64748b', minWidth: '150px' }}>{t('Types')}:</span>
-                  <span style={{ color: '#1e293b' }}> {type ? (language === 'fr' ? type.nomFrancais : type.nomAnglais) : '-'}</span>
-                </div>
-  <div style={{ display: 'flex', padding: '15px', background: '#f8f9fa', borderRadius: '8px' }}>
-                  <span style={{ fontWeight: 'bold', color: '#64748b', minWidth: '150px' }}>{t('description')}:</span>
-                  <span style={{ color: '#1e293b' }}> {(language === 'fr' ? type.descriptionFrancais : type.descriptionAnglais)} </span>
-                </div>
-
             <div style={{ background: 'white', borderRadius: '12px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }}>
               <h2 style={{ fontSize: '1.5rem', color: '#1e293b', marginBottom: '20px', borderBottom: '2px solid #e5e7eb', paddingBottom: '10px' }}>
                 {t('productDetails')}
               </h2>
 
-
-  {[
-    { key: 'profil', label: t('Profile') },
-    { key: 'matiere', label: t('Materials') },
-    { key: 'nom', label: t('Reference') },
-    { key: 'largeur_mm', label: t('Largeur'), unit: 'mm' },
-    { key: 'hauteur_mm', label: t('Hauteur'), unit: 'mm' },
-    { key: 'pas_mm', label: t('Pas'), unit: 'mm' },
-    { key: 'angle_trapeze_deg', label: t('Angle Trapèze'), unit: '°' },
-    { key: 'poids_g_m', label: t('Poids'), unit: 'Grammes' },
-    { key: 'fabricant', label: t('Fabricant') },
-    { key: 'reference_fabricant', label: t('Reference Fabricant') },
-    { key: 'longueur_int_mm', label: t('Longueur Intérieure'), unit: 'mm' },
-    { key: 'longueur_prim_mm', label: t('Longueur Primitive'), unit: 'mm' },
-    { key: 'longueur_ext_mm', label: t('Longueur Extérieure'), unit: 'mm' },
-    { key: 'epaisseur_mm', label: t('Épaisseur'), unit: 'mm' },
-    { key: 'nombre_dents', label: t('Nombre de Dents') },
-    { key: 'nombre_nervures', label: t('Nombre de Nervures') },
-    { key: 'temperature_min', label: t('Température Min'), unit: '°C' },
-    { key: 'temperature_max', label: t('Température Max'), unit: '°C' },
-    { key: 'vitesse_max_m_s', label: t('Vitesse Max'), unit: 'm/s' },
-    { key: 'resistance_traction_n', label: t('Résistance Traction'), unit: 'N' },
-    { key: 'durete_shore', label: t('Dureté Shore') },
-    { key: 'resistance_usure', label: t('Résistance Usure') },
-    { key: 'resistance_huile', label: t('Résistance Huile') },
-    { key: 'resistance_chaleur', label: t('Résistance Chaleur') },
-    { key: 'resistance_ozone', label: t('Résistance Ozone') },
-    { key: 'conductivite_antistatique', label: t('Conductivité Antistatique') },
-    { key: 'resistance_chimique', label: t('Résistance Chimique') },
-    { key: 'allongement_max_pct', label: t('Allongement Max'), unit: '%' },
-    { key: 'flexibilite', label: t('Flexibilité') },
-    { key: 'renforcement', label: t('Renforcement') },
-    { key: 'revetement', label: t('Revêtement') },
-    { key: 'revetement_dents', label: t('Revêtement Dents') },
-    { key: 'forme_dent', label: t('Forme Dent') },
-    { key: 'type_denture', label: t('Type Denture') },
-    { key: 'charge_max_n', label: t('Charge Max'), unit: 'N' },
-    { key: 'tol_largeur_mm', label: t('Tolérance Largeur'), unit: 'mm' },
-    { key: 'tol_hauteur_mm', label: t('Tolérance Hauteur'), unit: 'mm' }
-  ].map(attr =>
-    product[attr.key] !== null && (
-      <div key={attr.key} style={{ display: 'flex', padding: '15px', background: '#f8f9fa', borderRadius: '8px', marginBottom: '10px' }}>
-        <span style={{ fontWeight: 'bold', color: '#64748b', minWidth: '180px' }}>{attr.label}:</span>
-        <span style={{ color: '#1e293b', fontFamily: 'monospace' }}>
-          {product[attr.key]} {attr.unit || ''}
-        </span>
-      </div>
-    )
-  )}
-</div>
-
-
-                
+              {/* Matériau */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px', background: '#f8f9fa', borderRadius: '8px', marginBottom: '10px' }}>
+                <div>
+                  <span style={{ fontWeight: 'bold', color: '#64748b', minWidth: '180px' }}>{t('Materials')}:</span>
+                  <span style={{ fontSize:'1rem', color: '#1e293b', fontFamily: 'arial', marginLeft: '100px' }}>{currentMaterial}</span>
                 </div>
-                </div>
+                {Matieres.length > 1 && (
+                  <button
+                    onClick={handleNextMaterial}
+                    style={{
+                      backgroundColor: '#2563eb',
+                      color: 'white',
+                      border: 'none',
+                      padding: '6px 14px',
+                      borderRadius: '6px',
+                      cursor: 'pointer',
+                      fontSize: '1rem'
+                    }}
+                  >
+                    {t('changeMaterial')}
+                  </button>
+                )}
+              </div>
+
+              {/* Spécifications restantes */}
+              {[
+                { key: 'profil', label: t('Profile') },
+                { key: 'nom', label: t('Reference') },
+                { key: 'largeur_mm', label: t('Largeur'), unit: 'mm' },
+                { key: 'hauteur_mm', label: t('Hauteur'), unit: 'mm' },
+                { key: 'pas_mm', label: t('Pas'), unit: 'mm' },
+                { key: 'fabricant', label: t('Fabricant') },
+                { key: 'reference_fabricant', label: t('Reference Fabricant') }
+              ].map(attr =>
+                product[attr.key] !== null && (
+                  <div key={attr.key} style={{ display: 'flex', padding: '15px', background: '#f8f9fa', borderRadius: '8px', marginBottom: '10px' }}>
+                    <span style={{ fontWeight: 'bold', color: '#64748b', minWidth: '180px' }}>{attr.label}:</span>
+                    <span style={{ fontSize: '1rem' , color: '#1e293b', fontFamily: 'sans-serif' }}>
+                      {product[attr.key]} {attr.unit || ''}
+                    </span>
+                  </div>
+                )
+              )}
+            </div>
           </div>
         </div>
-     
-   
+      </div>
+    </div>
+
   );
 }

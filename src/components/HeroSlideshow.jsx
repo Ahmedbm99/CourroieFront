@@ -15,12 +15,18 @@ export default function AnimatedBanner() {
     { key: '1', bg: './dente.jpg', title: t('precision') },
     { key: '2', bg: './speciale.jpg', title: t('solution') },
   ];
-
+  const slides1 = [
+    { key: '0', bg: './titan.png', title: t('power') },
+    { key: '1', bg: './power.png', title: t('precision') },
+    { key: '2', bg: './ultram.jpg', title: t('solution') },
+    { key: '3', bg: './ultra.png', title: t('solution') },
+    
+  ];
 
   return (
     <div style={{ height: '500px', width: '100%' }}>
       <BannerAnim prefixCls="banner-user" autoPlay style={{ height: '100%' }}>
-        {slides.map(({ key, bg, title }) => (
+        {slides1.map(({ key, bg, title }) => (
           <Element
             prefixCls="banner-user-elem"
             key={key}
@@ -48,22 +54,7 @@ export default function AnimatedBanner() {
                 left: 0,
               }}
             />
-            <TweenOne
-              className="banner-user-title"
-              style={{
-                position: 'relative',
-                zIndex: 10,
-                color: 'rgba(255, 255, 255, 1)',
-                fontSize: 'clamp(1.5rem, 4vw, 3rem)', // responsive font size
-                fontWeight: 'bold Arial',
-                maxWidth: '90%',
-                padding: '15rem 3rem',
-                textShadow: '2 6px 18px rgba(0,0,0,0.7)',
-              }}
-              animation={{ delay:10, y:5, opacity: 0.9, type: 'from' }}
-            >
-              {title}
-            </TweenOne>
+           
           </Element>
         ))}
       </BannerAnim>

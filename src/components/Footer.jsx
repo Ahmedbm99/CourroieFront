@@ -35,13 +35,22 @@ export default function Footer() {
           <div className="footer-section">
             <h4>{t('contact')}</h4>
             <p><i className="fas fa-map-marker-alt"></i> {t('industrialZone')}, {t('tunisia')}</p>
-            <p><i className="fas fa-phone"></i> +216 52 677 764</p>
+            <p><i className="fas fa-phone"></i> +216 74 461 168 </p>
+            <p><i class="fa-brands fa-whatsapp"></i> +216 52 677 764</p>
+            <p><i class="fa-brands fa-whatsapp"></i>+216 58 419 119</p>
+            <p><i class="fa-brands fa-weixin"></i> medfakhfakh</p>
+          
             <p><i className="fas fa-envelope"></i> commercial@aisgroup.tn</p>
-            <p><i className="fas fa-globe"></i> www.aisgroup.tn</p>
+            <p><i className="fas fa-globe"></i>  <a
+                    href="https://www.aisgroup.tn"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ textDecoration: 'none', color: 'inherit' }}
+                  > www.aisgroup.tn </a></p>
           </div>
         </div>
         <div className="footer-bottom">
-          <p>&copy; 2025 {t('aisGroup')} – www.aisgroup.tn. {t('copyright')}</p>
+          <p>&copy; 2026 {t('aisGroup')} <a href="https://www.aisgroup.tn" target='_blank' rel="noopener noreferrer" style={{textDecoration: 'none', color:'inherit'}} > www.aisgroup.tn.</a> {t('copyright')}</p>
         </div>
       </div>
     </footer>

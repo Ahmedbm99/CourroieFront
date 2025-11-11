@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { FourSquare } from 'react-loading-indicators'; 
-
-import { useDispatch,useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useLanguage } from '../contexts/LanguageContext';
 import LanguageSelector from './LanguageSelector';
 import FamilyServices from '../services/FamilyServices';
@@ -61,44 +59,23 @@ export default function Header() {
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, [dispatch, families.length, types.length]);
-   const isLoadingFamily = useSelector((state) => state.family.isLoading);
-    const isLoadingType = useSelector((state) => state.type.isLoading);
-    
-    console.log('Family Loading State:', isLoadingFamily);
-    console.log('Type Loading State:', isLoadingType);
-    // Show loading only if either is loading
-    if (isLoadingFamily && isLoadingType) {
-      return (
-        <div className="loading-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-          <FourSquare color="#546d54" size="large" />
-        </div>
-      );
-    }
+
+
+
   return (
     <header className="header">
       <nav className="navbar">
         <div className="nav-container">
           <div className="logo">
-            <h2>KORTIBELT</h2>
-            <span className="logo-subtitle">
-              <a
-                href="https://www.aisgroup.tn"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setMobileOpen(false)}
-              >
-                AISGroup Tunisia
-              </a>
-            </span>
+             <NavLink to="/" onClick={() => setMobileOpen(false)}>
+                
+         <img src="/CourroieFront/logo.png" alt='Logo' style={{height:'100px',width:'150px'}} />
+                
+              </NavLink>
           </div>
 
           <ul className={`nav-menu ${mobileOpen ? 'active' : ''}`}>
-            <li>
-              <NavLink to="/" onClick={() => setMobileOpen(false)}>
-                {t('home')}
-              </NavLink>
-            </li>
-
+       
             {families && families.length > 0 ? (
               families.map((fam) => (
                 <li key={fam.id} className={isMobile ? '' : 'dropdown'}>

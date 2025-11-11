@@ -150,7 +150,8 @@ export const translations = {
   Poids: 'Poids',
   ToleranceLargeur: 'Tolérance Largeur',
   ToleranceHauteur: 'Tolérance Hauteur',
-
+changeMaterial: 'Changer de matière',
+imageInavailable: 'Image non disponible',
   // Family & Type descriptions
   familyCharacteristics: 'Caractéristiques de la famille',
   typeCharacteristics: 'Caractéristiques du type',
@@ -355,7 +356,7 @@ export const translations = {
   Poids: 'Weight',
   ToleranceLargeur: 'Width Tolerance',
   ToleranceHauteur: 'Height Tolerance',
-
+    changeMaterial: 'Change Material',
   // Family & Type descriptions
   familyCharacteristics: 'Family Characteristics',
   typeCharacteristics: 'Type Characteristics',
@@ -431,7 +432,7 @@ export const translations = {
     inStock: 'In stock',
     outOfStock: 'Out of stock',
     units: 'units',
-    
+    imageInavailable: 'Image not available',
     // Sections
     materialsTechnology: 'Materials & Technology',
     element: 'Element',

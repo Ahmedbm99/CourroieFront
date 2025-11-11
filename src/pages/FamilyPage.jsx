@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState  } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate,useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import useCart from '../hooks/useCart.js';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -13,6 +13,7 @@ export default function FamilyPage() {
   const family = useSelector(state => state.family.list);
   const type = useSelector(state => state.type.list);
   const [allProducts, setAllProducts] = useState([]);
+  const [products, setProducts] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [selectedFamily, setSelectedFamily] = useState(null);
   const [selectedType, setSelectedType] = useState(null);
@@ -23,31 +24,42 @@ export default function FamilyPage() {
   const [page, setPage] = useState(1);
   const productsPerPage = 12;
   const { add } = useCart();
-
+const location = useLocation();
+const queryParams  = new URLSearchParams(location.search);
+const applicationFilter = queryParams.get('application');
   const params = useParams();
   const familyKey = params.familyKey || 'all';
   const typeId = params.typekey || null;
 
-  useEffect(() => {
-    async function fetchProducts() {
-      try {
-        let response;
-        if (familyKey !== 'all') {
-          response = await BeltServices.getBeltsByFamilyAndType(familyKey, typeId);
-        
-        } else {
-          response = await BeltServices.getAllBelts();
-        }
-
-        setAllProducts(response.data);
-        setFiltered(response.data);
-        dispatch(setBelt(response.data)); // store in Redux
-      } catch (err) {
-        console.error('Error fetching belts:', err);
+useEffect(() => {
+  async function fetchProducts() {
+    try {
+      let response;
+      if (familyKey && familyKey !== 'all') {
+        response = await BeltServices.getBeltsByFamilyAndType(familyKey, typeId);
+      } else {
+        response = await BeltServices.getAllBelts();
       }
+
+      let data = response.data;
+
+      if (applicationFilter) {
+        data = data.filter(p =>
+          p.application && p.application.toLowerCase() === applicationFilter.toLowerCase()
+        );
+      }
+
+      setAllProducts(data);
+      setFiltered(data);
+      setProducts(data); 
+      dispatch(setBelt(data));
+    } catch (err) {
+      console.error('Error fetching belts:', err);
     }
-    fetchProducts();
-  }, [familyKey, typeId, dispatch]);
+  }
+
+  fetchProducts();
+}, [familyKey, typeId, dispatch, applicationFilter]);
 
   const lengthOptions = useMemo(() => [...new Set(allProducts.map(p => p.longueur_int_mm).filter(Boolean))].sort((a,b) => a-b), [allProducts]);
   const widthOptions = useMemo(() => [...new Set(allProducts.map(p => p.largeur_mm).filter(Boolean))].sort((a,b) => a-b), [allProducts]);
@@ -256,7 +268,7 @@ export default function FamilyPage() {
             toShow.map(product => (
               <div className="product-card" key={product.id}>
                 <div className="product-image">
-                  <img src={`https://ahmedbm99.github.io/CourroieFront${product.image_url}`} alt={getProductName(product)} loading="lazy" />
+                  <img src={`https://ahmedbm99.github.io/CourroieFront${product.Images[0].image_url}`} alt={getProductName(product)} loading="lazy" />
                   <div className="product-badge">{getProductName(product)}</div>
                 </div>
                 <div className="product-info">
