@@ -268,7 +268,14 @@ useEffect(() => {
             toShow.map(product => (
               <div className="product-card" key={product.id}>
                 <div className="product-image">
-                  <img src={`https://ahmedbm99.github.io/CourroieFront${product.Images[0].image_url}`} alt={getProductName(product)} loading="lazy" />
+{product.Images && product.Images.length > 0 ? (
+  <img
+    src={`https://ahmedbm99.github.io/CourroieFront${product.Images[0].image_url}`}
+    alt={getProductName(product)}
+    loading="lazy"
+  />
+) : null}
+
                   <div className="product-badge">{getProductName(product)}</div>
                 </div>
                 <div className="product-info">
