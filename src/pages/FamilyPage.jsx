@@ -15,7 +15,6 @@ export default function FamilyPage() {
   const [allProducts, setAllProducts] = useState([]);
   const [products, setProducts] = useState([]);
   const [filtered, setFiltered] = useState([]);
-  const [selectedFamily, setSelectedFamily] = useState(null);
   const [selectedType, setSelectedType] = useState(null);
   const [profile, setProfile] = useState('');
   const [material, setMaterial] = useState('');
@@ -28,16 +27,26 @@ const location = useLocation();
 const queryParams  = new URLSearchParams(location.search);
 const applicationFilter = queryParams.get('application');
   const params = useParams();
-  const familyKey = params.familyKey || 'all';
+  const familyKey = params.id || 'all';
   const typeId = params.typekey || null;
+  const [selectedFamily, setSelectedFamily] = useState(null);
 
 useEffect(() => {
   async function fetchProducts() {
     try {
       let response;
-      if (familyKey && familyKey !== 'all') {
+      if (familyKey && familyKey !== 'all' && typeId ) {
         response = await BeltServices.getBeltsByFamilyAndType(familyKey, typeId);
       } else {
+        if(familyKey && familyKey!== 'all'){
+          response = await BeltServices.getBeltsByFamily(familyKey);
+          const selected = family.find(f => f.id === familyKey);
+          if (selected) {
+            setSelectedFamily(selected.id);
+}   
+
+        }else
+
         response = await BeltServices.getAllBelts();
       }
 
@@ -48,7 +57,6 @@ useEffect(() => {
           p.application && p.application.toLowerCase() === applicationFilter.toLowerCase()
         );
       }
-      console.log('Fetched products:', data);
       setAllProducts(data);
       setFiltered(data);
       setProducts(data); 
@@ -65,11 +73,9 @@ useEffect(() => {
   const widthOptions = useMemo(() => [...new Set(allProducts.map(p => p.largeur_mm).filter(Boolean))].sort((a,b) => a-b), [allProducts]);
   const thicknessOptions = useMemo(() => [...new Set(allProducts.map(p => p.epaisseur_mm).filter(Boolean))].sort((a,b) => a-b), [allProducts]);
   const profileOptions = useMemo(() => [...new Set(allProducts.map(p => p.nom).filter(Boolean))], [allProducts]);
-  const materialOptions = useMemo(() => [...new Set(allProducts.map(p => p.matiere).filter(Boolean))], [allProducts]);
-
+const materialOptions = useMemo(() => [...new Set(allProducts.flatMap(p => p.Matieres.flatMap(m=> m.matiere)) .filter(Boolean) )], [allProducts]);
   const getProductName = (product) =>  product.nom;
   const getProductDescription = (product) =>  product.description;
-
   useEffect(() => {
     let list = [...allProducts];
 
@@ -84,8 +90,11 @@ useEffect(() => {
     }
 
     if (profile) list = list.filter(p => (p.nom || '').includes(profile));
-    if (material) list = list.filter(p => (p.matiere || '').includes(material));
-
+if (material) {
+  list = list.filter(p =>
+    (p.Matieres || []).some(m => m.matiere && m.matiere.includes(material))
+  );
+}
     const { length_min, width_min, thickness_min } = dimensions;
     list = list.filter(p =>
       (!length_min || p.longueur_int_mm?.toString() === length_min) &&
@@ -121,9 +130,10 @@ useEffect(() => {
       </section>
 
       <section className="family-navigation">
+        
         <div className="container">
                         <button
-          onClick={() => navigate(-1)}
+          onClick={() => navigate('/')}
           style={{
             background: 'none',
             border: 'none',
@@ -156,6 +166,7 @@ useEffect(() => {
               </button>
             ))}
           </div>
+         
         </div>
       </section>
 
@@ -182,7 +193,7 @@ useEffect(() => {
                 <span>{language === 'fr' ? t.nomFrancais :t.nomAnglais}</span>
               </button>
             ))}
-            
+   
           </div>
 
         </div>
@@ -218,9 +229,12 @@ useEffect(() => {
             <label>{language === 'fr' ? 'Matière' : 'Material'}</label>
             <select value={material} onChange={e => setMaterial(e.target.value)}>
               <option value="">{language === 'fr' ? 'Toutes les matières' : 'All materials'}</option>
-              {materialOptions.map(m => <option key={m} value={m}>{m}</option>)}
+              {materialOptions.map((m, index) => (
+                <option key={`${m}-${index}`} value={m}>{m}</option>
+              ))}
             </select>
           </div>
+
 
           <div className="filter-group">
             <label>{language === 'fr' ? 'Longueur' : 'Length'}</label>
@@ -245,7 +259,16 @@ useEffect(() => {
               {thicknessOptions.map(t => <option key={t} value={t}>{t} mm</option>)}
             </select>
           </div>
+                   <button className="cta-button primary" onClick={() => {
+                setProfile(''); setMaterial(''); setSearch('');
+                setDimensions({ length_min: '', width_min: '', thickness_min: '' });
+                setSelectedFamily(null);
+                navigate('/family');
+              }}>
+                {language === 'fr' ? 'Réinitialiser les filtres' : 'Reset filters'}
+              </button>
         </div>
+
         </div>
       </section>
 

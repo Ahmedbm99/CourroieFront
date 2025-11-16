@@ -163,7 +163,9 @@ export default function ProductDetailPage() {
                     ? 'standard.jpg'
                     : currentMaterial === 'EPDM'
                     ? 'ultra.jpg'
-                    : 'titan.jpg'
+                    : currentMaterial === 'HNBR'
+                    ? 'titan.jpg'
+                    : null
                 }`}
                 alt={currentMaterial}
                 style={{

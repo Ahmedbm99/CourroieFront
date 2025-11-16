@@ -11,9 +11,11 @@ function ContactPage(){
         <div className="contact-content">
           <div className="contact-info">
             <div className="contact-item"><i className="fas fa-map-marker-alt"></i><div><h4>{t('address')}</h4><p>{t('industrialZone')}<br/>{t('tunisia')}</p></div></div>
-            <div className="contact-item"><i className="fas fa-phone"></i><div><h4>{t('phone')}</h4><p>+216 52 677 764</p></div></div>
+            <div className="contact-item"><i className="fas fa-phone"></i><div><h4>{t('phone')}</h4><p>+216 74 461 168</p></div></div>
+            <div className="contact-item"><i class="fa-brands fa-weixin"></i><div><h4>Wechat</h4><p> medfakhfakh</p></div></div>
             <div className="contact-item"><i className="fas fa-envelope"></i><div><h4>{t('email')}</h4><p>commercial@aisgroup.tn</p></div></div>
             <div className="contact-item"><i className="fas fa-globe"></i><div><h4>{t('website')}</h4><p>www.aisgroup.tn</p></div></div>
+     
           </div>
           <form className="contact-form" onSubmit={e => e.preventDefault()}>
             <input type="text" placeholder={t('yourName')} required />
