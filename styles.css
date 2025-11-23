@@ -265,6 +265,119 @@ body {
 .brand-intro {
     padding: 4rem 0;
     background: white;
+    
+}
+/* WelcomeSection Styles - Style Kortibelt */
+
+.welcome-section {
+  background-color: #f8fafc;
+  padding: 4rem 1.5rem;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.welcome-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.welcome-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.welcome-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.welcome-subtitle {
+  font-size: 1.25rem;
+  color: #64748b;
+  font-weight: 400;
+  margin-bottom: 2rem;
+}
+
+.welcome-card {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 3rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.welcome-content {
+  color: #374151;
+  line-height: 1.8;
+}
+
+.welcome-paragraph {
+  font-size: 1.05rem;
+  margin-bottom: 1.5rem;
+  text-align: justify;
+}
+
+.welcome-highlight {
+  font-weight: 600;
+  color: #1e3a8a;
+}
+
+.welcome-mission {
+  padding-top: 1.5rem;
+  margin-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.welcome-mission-text {
+  font-size: 1.05rem;
+  color: #374151;
+  text-align: justify;
+}
+
+.welcome-mission-label {
+  color: #f97316;
+  font-weight: 600;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .welcome-section {
+    padding: 3rem 1rem;
+  }
+  
+  .welcome-title {
+    font-size: 2rem;
+  }
+  
+  .welcome-subtitle {
+    font-size: 1.125rem;
+  }
+  
+  .welcome-card {
+    padding: 2rem 1.5rem;
+  }
+  
+  .welcome-paragraph,
+  .welcome-mission-text {
+    font-size: 1rem;
+    text-align: left;
+  }
+}
+
+@media (min-width: 1024px) {
+  .welcome-title {
+    font-size: 3rem;
+  }
+  
+  .welcome-subtitle {
+    font-size: 1.5rem;
+  }
 }
 
 .intro-content {
