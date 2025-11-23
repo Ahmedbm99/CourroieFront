@@ -8,6 +8,7 @@ import AboutSection from '../components/AboutSection.jsx';
 import ApplicationsSection from '../components/ApplicationSection.jsx';
 import FamillySection from '../components/FamillySection.jsx';
 import TrustComponent from '../components/TrustComponent.jsx';
+import WelcomeSection from '../components/WelcomeSection.jsx';
 export default function HomePage() {
   
   
@@ -27,6 +28,7 @@ export default function HomePage() {
       
      
       <HeroSlideshow />
+      <WelcomeSection/>
       <FamillySection />
       <ShowcaseComponent />
        <ApplicationsSection />

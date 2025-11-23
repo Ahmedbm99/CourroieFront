@@ -53,7 +53,17 @@ export const translations = {
     quote: 'Devis',
     details: 'Détails',
     loadMore: 'Charger plus de produits',
-    
+    welcome_title: "Bienvenue chez Kortibelt",
+  welcome_subtitle: "Votre référence dans la transmission de puissance",
+  paragraph1: "Forts de nombreuses années d'expérience en sourcing industriel en Chine, nous avons développé une connaissance directe et précise des meilleurs fabricants et des matières premières les plus performantes.",
+  paragraph2: "Cette expertise nous a permis de créer une marque qui allie <highlight>qualité supérieure</highlight>, <highlight>durabilité</highlight> et <highlight>prix hautement compétitifs</highlight>.",
+  paragraph3: "Chez Kortibelt, chaque produit est le résultat d'une sélection rigoureuse, d'un contrôle constant et d'une exigence maximale en matière de performance.",
+  mission_label: "Notre mission :",
+  mission_text: "offrir à nos partenaires en Afrique, au Moyen-Orient et dans le monde entier des solutions fiables, innovantes et adaptées aux besoins industriels les plus exigeants.",
+    qualitySup:"qualité supérieure",
+    Durabilite:"durabilité et",
+    prix:"prix hautement compétitifs",
+    experience:"Cette expertise nous a permis de créer une marque qui allie",
     // Cart
     yourCart: 'Votre Panier',
     emptyCart: 'Votre panier est vide',
@@ -281,7 +291,11 @@ imageInavailable: 'Image non disponible',
     about: 'About',
     contact: 'Contact',
     cart: 'Cart',
-    
+    qualitySup: "superior quality",
+Durabilite: "durability and",
+prix: "highly competitive prices",
+experience: "This expertise has allowed us to create a brand that combines",
+
     // whatsupp & help
   whatsappHelp: "Contact via WhatsApp",
   whatsappAssistance: "WhatsApp Assistance",
@@ -477,9 +491,18 @@ imageInavailable: 'Image non disponible',
   valueReliability: "Reliability",
   valueDurability: "Long-lasting quality",
   distributorCall: "If you are interested in becoming an official distributor of our belts in your country, our sales team is ready to support you every step of the way.",
+  
+    
+  welcome_title: "Welcome to Kortibelt",
+  welcome_subtitle: "Your reference in power transmission",
+  paragraph1: "With many years of experience in industrial sourcing in China, we have developed a direct and precise knowledge of the best manufacturers and the highest-quality raw materials.",
+  paragraph2: "This expertise has allowed us to create a brand that combines <highlight>superior quality</highlight>, <highlight>durability</highlight>, and <highlight>highly competitive prices</highlight>.",
+  paragraph3: "At Kortibelt, each product is the result of rigorous selection, constant control, and the highest standards of performance.",
+  mission_label: "Our mission:",
+  mission_text: "to provide our partners in Africa, the Middle East, and worldwide with reliable, innovative, and tailored solutions for the most demanding industrial needs.",
 
 
-    heatResistance: 'Heat resistance and flexibility',
+  heatResistance: 'Heat resistance and flexibility',
     traction: 'Traction and stability',
     protection: 'Protection and adherence',
     adaptedApplication: 'Adapted to each application',
