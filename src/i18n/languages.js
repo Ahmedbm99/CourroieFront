@@ -64,7 +64,10 @@ export const translations = {
     clearCart: 'Vider le panier',
     requestQuote: 'Demander un devis',
     back: 'Retour',
-    
+    precisio: 'Précision',
+    qualite: 'Qualité',
+    fiabilite:'Fiabilité',
+    performance:'Performance',
     // Product Detail
     specifications: 'Spécifications Techniques',
     productDetails: 'Détails du Produit',
@@ -86,6 +89,10 @@ export const translations = {
     courroieSpeciale: 'Aramide, HNBR, Silicone, Courroies ignifugées...',
     courroiePu: 'T2.5, T5, T10, T20, AT5...',
     courroieCaoutechouc: 'Trapézoïdales, HTD & STD & RPP, Poly-V...',
+
+  aboutKortibelt: "À propos de Kortibelt",
+  overviewKortibelt: "Kortibelt est une marque internationale spécialisée dans les courroies industrielles de transmission de puissance. Produites dans des usines chinoises certifiées et conformes aux normes internationales, nos courroies se distinguent par leur performance, leur fiabilité et leur longévité. Grâce à une sélection rigoureuse des matières premières et à un contrôle qualité strict, Kortibelt figure parmi les fabrications chinoises les plus fiables du secteur. ",
+    overviewKortibeltS:"En Tunisie, nos produits sont distribués exclusivement par AisGroup, représentant officiel, garantissant service, conseil et support technique. Kortibelt recherche également des distributeurs dans le monde entier afin d’étendre son réseau international.",
 
     //vitrine
     power: 'Kortibelt pour La puissance',
@@ -155,7 +162,16 @@ imageInavailable: 'Image non disponible',
   // Family & Type descriptions
   familyCharacteristics: 'Caractéristiques de la famille',
   typeCharacteristics: 'Caractéristiques du type',
+    
+  distributorIntro: "Kortibelt recherche actuellement des distributeurs dans le monde entier afin de construire un réseau international solide dans le secteur des courroies industrielles. Nous collaborons uniquement avec des partenaires fiables et engagés, capables de représenter une marque fondée sur :",
+  valuePerformance: "La performance",
+  valuePrecision: "La précision",
+  valueReliability: "La fiabilité",
+  valueDurability: "La qualité durable",
+  distributorCall: "Si vous souhaitez devenir distributeur officiel de nos courroies dans votre pays, notre équipe commerciale est prête à vous accompagner à chaque étape.",
 
+
+  
     // Help
     needHelp: "Besoin d'aide ?",
     helpAndAdvice: 'Aide & Conseils',
@@ -175,8 +191,8 @@ imageInavailable: 'Image non disponible',
     // Additional texts
     description: 'Description',
     brandIntro: 'KORTIBELT - Une marque africaine avec une technologie mondiale',
-    brandDescription1: 'KORTIBELT est une marque tunisienne appartenant à AISGroup Tunisia, spécialisée dans les solutions de transmission de puissance. Les produits KORTIBELT sont fabriqués en Chine suivant les standards ISO / DIN, avec un contrôle qualité rigoureux.',
-    brandDescription2: 'Grâce à un positionnement unique entre qualité industrielle et prix compétitif, KORTIBELT équipe aujourd\'hui de nombreuses usines en Afrique du Nord et en Afrique.',
+    brandDescription1: 'Kortibelt est une marque internationale spécialisée exclusivement dans les courroies industrielles de transmission de puissance. Nos courroies sont fabriquées en Chine dans des usines certifiées, reconnues pour leur savoir-faire avancé, leur respect des normes internationales et leur maîtrise des technologies modernes de production. Nous sélectionnons soigneusement des matières premières haut de gamme pour garantir à nos clients des courroies offrant : Une performance mécanique élevée Une fiabilité constante Une longue durée de vie Une précision optimale dans les applications industrielles Grâce à un contrôle qualité strict (QC) et à une production conforme aux standards mondiaux, Kortibelt se positionne parmi les meilleures fabrications chinoises du secteur des courroies industrielles.',
+    brandDescription2: 'En Tunisie, les courroies Kortibelt sont disponibles exclusivement auprès de AisGroup (aisgroup.tn), représentant officiel de la marque. AisGroup assure la vente, le support technique et l’accompagnement pour les usines et les professionnels du marché tunisien.',
     noSpecs: 'Aucune spécification technique disponible',
     notSpecified: 'Non spécifié',
     inStock: 'En stock',
@@ -421,18 +437,30 @@ imageInavailable: 'Image non disponible',
     kortibelt: 'KORTIBELT',
     aisGroup: 'AISGroup Tunisia',
     africanBrand: 'African brand with global technology',
-    
+    aboutKortibelt: "About Kortibelt",
+    overviewKortibelt: "Kortibelt is an international brand specializing in industrial power transmission belts. Manufactured in certified Chinese factories that comply with global standards, our belts stand out for their performance, reliability, and long service life. With carefully selected raw materials and strict quality control, Kortibelt ranks among the most trusted Chinese manufacturers in the industrial belt sector. ",
+    overviewKortibeltS: "In Tunisia, our products are distributed exclusively by AisGroup, the official representative offering sales, support, and technical assistance. Kortibelt is also seeking distributors worldwide to expand its global network.",
     // Additional texts
     description: 'Description',
     brandIntro: 'KORTIBELT - An African brand with global technology',
-    brandDescription1: 'KORTIBELT is a Tunisian brand belonging to AISGroup Tunisia, specializing in power transmission solutions. KORTIBELT products are manufactured in China following ISO / DIN standards, with rigorous quality control.',
-    brandDescription2: 'Thanks to a unique positioning between industrial quality and competitive prices, KORTIBELT today equips many factories in North Africa and Africa.',
+    brandDescription1: 'Kortibelt is an international brand specialized exclusively in industrial power transmission belts. Our belts are manufactured in China in certified factories known for their advanced expertise, adherence to international standards, and mastery of modern production technologies. We carefully select premium raw materials to ensure our customers receive belts that deliver high mechanical performance, consistent reliability, long service life, and optimal precision for industrial applications. Thanks to strict quality control (QC) and production that complies with global standards, Kortibelt stands among the best Chinese manufacturers in the industrial belt sector.',
+    brandDescription2: 'In Tunisia, Kortibelt belts are available exclusively through AisGroup (aisgroup.tn), the official representative of the brand. AisGroup provides sales, technical support, and assistance for factories and professionals in the Tunisian market.',
     noSpecs: 'No technical specifications available',
     notSpecified: 'Not specified',
     inStock: 'In stock',
     outOfStock: 'Out of stock',
     units: 'units',
     imageInavailable: 'Image not available',
+   description: "Kortibelt is currently seeking distributors worldwide to build a strong global network in the industrial belt sector. We work exclusively with reliable and committed partners who can represent a brand built on performance, precision, reliability, and long-lasting quality. If you are interested in becoming an official distributor of our belts in your country, our sales team is ready to support you every step of the way.",
+    values: [
+      "Performance",
+      "Precision",
+      "Reliability",
+      "Long-lasting quality"
+    ],
+  
+
+
     // Sections
     materialsTechnology: 'Materials & Technology',
     element: 'Element',
@@ -442,6 +470,15 @@ imageInavailable: 'Image non disponible',
     cord: 'Cord',
     fabric: 'Fabric',
     coating: 'Coating',
+    
+  distributorIntro: "Kortibelt is currently seeking distributors worldwide to build a strong global network in the industrial belt sector. We work exclusively with reliable and committed partners who can represent a brand built on:",
+  valuePerformance: "Performance",
+  valuePrecision: "Precision",
+  valueReliability: "Reliability",
+  valueDurability: "Long-lasting quality",
+  distributorCall: "If you are interested in becoming an official distributor of our belts in your country, our sales team is ready to support you every step of the way.",
+
+
     heatResistance: 'Heat resistance and flexibility',
     traction: 'Traction and stability',
     protection: 'Protection and adherence',
@@ -485,7 +522,10 @@ imageInavailable: 'Image non disponible',
     quoteSuccess: 'Quote request sent successfully!',
     quoteError: 'Error sending quote',
     describeNeeds: 'Describe your specific needs...',
-    
+    precisio: 'Precison',
+    qualite: 'Quality',
+    fiabilite:'Reliability',
+    performance:'Performance',
     // FamilyPage
     familiesTitle: 'KORTIBELT Product Families',
     familiesDescription: 'Discover our complete range of belts organized by family for optimal navigation',

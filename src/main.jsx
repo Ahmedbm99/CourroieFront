@@ -5,11 +5,14 @@ import { LanguageProvider } from './contexts/LanguageContext';
 import App from './App.jsx';
 import { Provider } from 'react-redux';
 import store from './store';
+import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
+
 const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(
   <React.StrictMode>
+    <PrimeReactProvider>
     <Provider store={store}>
      <LanguageProvider>
     <BrowserRouter basename="/CourroieFront/">
@@ -19,6 +22,7 @@ root.render(
     </BrowserRouter>
       </LanguageProvider>
       </Provider>
+  </PrimeReactProvider>
   </React.StrictMode>
 );
 

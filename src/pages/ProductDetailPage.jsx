@@ -12,14 +12,13 @@ export default function ProductDetailPage() {
   const { add, setCartOpen } = useCart();
   const { t, language } = useLanguage();
 
-  const families = useSelector(state => state.family.list);
-  const types = useSelector(state => state.type.list);
+const [zoomPosition, setZoomPosition] = useState(null);
 
   const [product, setProduct] = useState(null);
   const [Fiche, setFiche] = useState([]);
   const [Images, setImages] = useState([]);
-  const [Matieres, setMatieres] = useState([]); 
-  const [currentMaterialIndex, setCurrentMaterialIndex] = useState(0); 
+  const [Matieres, setMatieres] = useState([]);
+  const [currentMaterialIndex, setCurrentMaterialIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -72,40 +71,17 @@ export default function ProductDetailPage() {
   if (loading) return <p>Loading...</p>;
   if (error || !product) return <p>{t('productNotFound')}</p>;
 
-  const family = families.find(f => f.id === product.famille_courroie_id);
-  const type = types.find(t => t.id === product.type_courroie_id);
   const currentMaterial = Matieres[currentMaterialIndex]?.matiere || '-';
   const currentImage = Images[currentMaterialIndex]?.image_url || Images[0]?.image_url || null;
   const currentFiche = Fiche[currentMaterialIndex]?.fiche_technique_url || Fiche[0]?.fiche_technique_url || null;
-  const specs = Object.entries(product).filter(
-    ([key, value]) =>
-      value !== null &&
-      ![
-        'id', 'nom', 'nomFrancais', 'nomAnglais',
-        'descriptionFrancais', 'descriptionAnglais',
-        'famille_courroie_id', 'type_courroie_id',
-        'image_url', 'fiche_technique_url', 'profil'
-      ].includes(key)
-  );
 
   return (
-   
     <div style={{ paddingTop: '200px', minHeight: '100vh' }}>
-      
       <div className="container">
+        
         <button
           onClick={() => navigate(-1)}
-          style={{
-            background: 'none',
-            border: 'none',
-            color: '#2563eb',
-            cursor: 'pointer',
-            fontSize: '1rem',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            marginBottom: '20px'
-          }}
+          className="back-btn"
         >
           <i className="fas fa-arrow-left"></i> {t('back')}
         </button>
@@ -118,93 +94,71 @@ export default function ProductDetailPage() {
             marginBottom: '40px'
           }}
         >
-          {/* Image & Actions */}
           <div>
-            <div
-              style={{
-                background: 'white',
-                borderRadius: '12px',
-                padding: '20px',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-                position: 'sticky',
-                top: '120px'
-              }}
-            >
-              <div
-                style={{
-                  position: 'relative',
-                  paddingBottom: '100%',
-                  background: '#f8f9fa',
-                  borderRadius: '8px',
-                  overflow: 'hidden'
-                }}
-              >
+            <div className="image-card">
+
+              <div className="zoom-container"
+                   onMouseMove={(e) => {
+       const rect = e.currentTarget.getBoundingClientRect();
+       const x = ((e.clientX - rect.left) / rect.width) * 100;
+       const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+       setZoomPosition({ x, y });
+     }}
+     onMouseLeave={() => setZoomPosition(null)}
+>
                 {Images[0] ? (
+                  <>
+                    {currentMaterial && (
+    <img
+      src={`https://ahmedbm99.github.io/CourroieFront/badges/${
+        currentMaterial === 'CR' ? 'power.png' :
+        currentMaterial === 'CR+NR' || currentMaterial === 'NR+CR' ? 'standard.png' :
+        currentMaterial === 'EPDM' ? 'ultra.png' :
+        currentMaterial === 'HNBR' ? 'titan.png' :
+        null
+      }`}
+      alt={currentMaterial}
+      style={{
+        position: 'absolute',
+        top: '15px',
+        left: '15px',
+        width: '150px',
+        height: '100px',
+        zIndex:'999',
+        objectFit: 'contain',
+        borderRadius: '20%',
+        background: 'rgba(255, 255, 255, 0.8)',
+        padding: '5px',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+      }}
+    />
+  )}
                   <img
-                    src={`https://ahmedbm99.github.io/CourroieFront${currentImage }`}
+                    src={`https://ahmedbm99.github.io/CourroieFront${currentImage}`}
                     alt={product.nom}
+                    className="zoom-img"
                     style={{
-                      position: 'absolute',
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      borderRadius: '8px'
-                    }}
+          transform: zoomPosition
+            ? `scale(2) translate(${50 - zoomPosition.x}%, ${50 - zoomPosition.y}%)`
+            : "scale(1)",
+          transition: zoomPosition ? "transform 0.05s linear" : "transform 0.3s ease-out"
+        }}
                   />
+                        <div className="zoom-overlay"></div>
+
+                  </>
                 ) : (
                   <p style={{ textAlign: 'center', paddingTop: '40%' }}>{t('imageInavailable')}</p>
                 )}
-              {currentMaterial && (
-              <img
-                src={`https://ahmedbm99.github.io/CourroieFront/badges/${
-                  currentMaterial === 'CR'
-                    ? 'power.jpg'
-                    : currentMaterial === 'CR+NR' || currentMaterial === 'NR+CR'
-                    ? 'standard.jpg'
-                    : currentMaterial === 'EPDM'
-                    ? 'ultra.jpg'
-                    : currentMaterial === 'HNBR'
-                    ? 'titan.jpg'
-                    : null
-                }`}
-                alt={currentMaterial}
-                style={{
-                  position: 'absolute',
-                  top: '15px',
-                  left: '15px',
-                  width: '150px',
-                  height: '100px',
-                  objectFit: 'contain',
-                  borderRadius: '20%',
-                  background: 'rgba(255, 255, 255, 0.8)',
-                  padding: '5px',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
-                }}
-              />
-            )}
-                {product.profile && (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: '15px',
-                      right: '15px',
-                      background: '#2563eb',
-                      color: 'white',
-                      padding: '8px 16px',
-                      borderRadius: '20px',
-                      fontWeight: 'bold',
-                      fontSize: '0.9rem'
-                    }}
-                  >
-                    {product.profile}
-                  </div>
-                )}
+                
               </div>
 
-              <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <div className="action-buttons">
                 <button className="btn-secondary" onClick={handleAddToCart}>
                   {t('addToCart')}
                 </button>
+
                 {Fiche.length > 0 && (
                   <button className="btn-secondary" onClick={handleDownloadDatasheet}>
                     {t('downloadDatasheet')}
@@ -214,40 +168,23 @@ export default function ProductDetailPage() {
             </div>
           </div>
 
-          {/* Info Section */}
           <div>
             <h1>{language === 'fr' ? product.nomFrancais || product.nom : product.nomAnglais || product.nom}</h1>
 
-            <div style={{ background: 'white', borderRadius: '12px', padding: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }}>
-              <h2 style={{ fontSize: '1.5rem', color: '#1e293b', marginBottom: '20px', borderBottom: '2px solid #e5e7eb', paddingBottom: '10px' }}>
-                {t('productDetails')}
-              </h2>
+            <div className="info-card">
+              <h2 className="section-title">{t('productDetails')}</h2>
 
-              {/* Matériau */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px', background: '#f8f9fa', borderRadius: '8px', marginBottom: '10px' }}>
-                <div>
-                  <span style={{ fontWeight: 'bold', color: '#64748b', minWidth: '180px' }}>{t('Materials')}:</span>
-                  <span style={{ fontSize:'1rem', color: '#1e293b', fontFamily: 'arial', marginLeft: '100px' }}>{currentMaterial}</span>
-                </div>
+              <div className="info-row">
+                <span className="info-label">{t('Materials')}:</span>
+                <span className="info-value">{currentMaterial}</span>
+
                 {Matieres.length > 1 && (
-                  <button
-                    onClick={handleNextMaterial}
-                    style={{
-                      backgroundColor: '#2563eb',
-                      color: 'white',
-                      border: 'none',
-                      padding: '6px 14px',
-                      borderRadius: '6px',
-                      cursor: 'pointer',
-                      fontSize: '1rem'
-                    }}
-                  >
+                  <button className="change-btn" onClick={handleNextMaterial}>
                     {t('changeMaterial')}
                   </button>
                 )}
               </div>
 
-              {/* Spécifications restantes */}
               {[
                 { key: 'profil', label: t('Profile') },
                 { key: 'nom', label: t('Reference') },

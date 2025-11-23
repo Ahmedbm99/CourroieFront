@@ -1,18 +1,49 @@
 import React from 'react';
 import { materialsTable, applicationsList } from '../data/families.js';
 import { useLanguage } from '../contexts/LanguageContext';
+import HeroSlideshow from '../components/HeroSlideshow';
 
 export default function AboutPage() {
   const { t } = useLanguage();
   return (
     <>
+          <HeroSlideshow />
+    
       <section className="brand-intro" style={{ paddingTop: '8rem' }}>
         <div className="container">
           <div className="intro-content">
             <h2>{t('about')}</h2>
             <p>{t('brandDescription1')}</p>
             <p>{t('brandDescription2')}</p>
+           <p>{t('distributorIntro')}</p>
+            <ul>
+              <li>{t('valuePerformance')}</li>
+              <li>{t('valuePrecision')}</li>
+              <li>{t('valueReliability')}</li>
+              <li>{t('valueDurability')}</li>
+            </ul>
+            <p>{t('distributorCall')}</p>
+          
           </div>
+          
+        </div>
+        <div>
+
+                      <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d819.8071861254737!2d10.73829756625433!3d34.72462812805315!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13002d0056200c07%3A0xb6fb8be2de6302ab!2sAIS!5e0!3m2!1sfr!2stn!4v1762950057246!5m2!1sfr!2stn"
+            style={{
+              border: 0,
+              position: 'relative',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+            }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="AIS Location"
+          ></iframe>
         </div>
       </section>
 

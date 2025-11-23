@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import Header from './components/Header.jsx';
@@ -14,10 +14,21 @@ import QuoteModal from './components/QuoteModal.jsx';
 import WhatsAppButton from './components/WhatsAppButton.jsx';
 import HelpButton from './components/HelpButton.jsx';
 import ContactPage from './pages/ContactPage.jsx';
+import FeedbackModal from './pages/FeedbackModal.jsx';
 
 export default function App() {
  
+  const [showFeedback, setShowFeedback] = useState(false);
 
+  useEffect(() => {
+    
+    const timer = setTimeout(() => {
+      setShowFeedback(true);
+      console.log(showFeedback)
+    }, 3 * 60 * 1000); 
+
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <>
       <Header />
@@ -39,6 +50,10 @@ export default function App() {
       <CartModal />
       <QuoteModal />
       <WhatsAppButton />
+      <FeedbackModal 
+        visible={showFeedback} 
+        onClose={() => setShowFeedback(false)} 
+      />
     </>
   );
 }

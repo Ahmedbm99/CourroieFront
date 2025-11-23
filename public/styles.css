@@ -475,6 +475,52 @@ body {
 .about-text h2 { font-size: 2.5rem; font-weight: 700; color: #1e293b; margin-bottom: 1.5rem; }
 .about-text p { font-size: 1.1rem; color: #64748b; margin-bottom: 1.5rem; line-height: 1.6; }
 .features { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+.featuresAbout { display: flex; flex-direction:row; gap: 6rem; margin-top: 4rem;  align-items: center;}
+.featureAbout i { color: #2563eb; font-size: 2rem; }
+/* Paragraphe général */
+.brand-intro p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #333;
+  margin-bottom: 1.2rem;
+  font-weight: 400;
+}
+
+/* Liste des valeurs */
+.brand-intro ul {
+  margin: 1rem 0 1.5rem 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.brand-intro ul li {
+  position: relative;
+  margin-bottom: 0.6rem;
+  font-size: 1.05rem;
+  color: #222;
+  padding-left: 1.4rem;
+  font-weight: 500;
+}
+
+/* Petit icône personnalisé pour chaque li */
+.brand-intro ul li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #0D6EFD; /* bleu moderne */
+  font-size: 1rem;
+  font-weight: bold;
+}
+.brand-intro ul li {
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.brand-intro ul li:hover {
+  transform: translateX(4px);
+  color: #0D6EFD;
+}
+
 .feature { display: flex; align-items: center; gap: 1rem; }
 .feature i { color: #2563eb; font-size: 1.2rem; }
 .feature span { font-weight: 500; color: #1e293b; }
